@@ -1,26 +1,25 @@
 import React, {Suspense} from 'react';
 import {View, SafeAreaView, Platform} from 'react-native';
-import {Dialog} from '@rneui/themed';
+import {Provider, Button} from '@ant-design/react-native';
 import RouterConfig from './src/routes';
 
 const App = () => {
   return (
-    <>
+    <Provider>
       {Platform.OS === 'android' ? (
         <View>
-          <Suspense
-            fallback={<Dialog.Loading loadingProps={{size: 'large'}} />}>
+          <Suspense fallback={<Button loading>loading button</Button>}>
             <RouterConfig />
           </Suspense>
         </View>
       ) : (
         <SafeAreaView>
-          <Suspense fallback={<Dialog.Loading />}>
+          <Suspense fallback={<Button loading>loading button</Button>}>
             <RouterConfig />
           </Suspense>
         </SafeAreaView>
       )}
-    </>
+    </Provider>
   );
 };
 

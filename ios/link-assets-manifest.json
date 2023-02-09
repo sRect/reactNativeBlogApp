@@ -1,4 +1,29 @@
 {
   "migIndex": 1,
-  "data": []
+  "data": [
+    {
+      "path": "src/assets/img/bg.png",
+      "sha1": "9a36f1700ea62b4bf3b58165785a8d092814fa85"
+    },
+    {
+      "path": "src/assets/img/list.png",
+      "sha1": "a5d3a72900404c48e1fa776d28570ae5d5c575c5"
+    },
+    {
+      "path": "src/assets/img/test2.png",
+      "sha1": "6b3010329e460c4f1da7278ea75d334971e85238"
+    },
+    {
+      "path": "src/assets/img/user.png",
+      "sha1": "0b285c3ad48448b67f30a49aae0eca98e36f86cc"
+    },
+    {
+      "path": "node_modules/@ant-design/icons-react-native/fonts/antfill.ttf",
+      "sha1": "56960e7721fc92b62e0f7c4d131ffe34ed042c49"
+    },
+    {
+      "path": "node_modules/@ant-design/icons-react-native/fonts/antoutline.ttf",
+      "sha1": "66720607b7496a48f145425386b2082b73662fd1"
+    }
+  ]
 }

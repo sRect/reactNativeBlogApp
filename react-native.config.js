@@ -3,5 +3,8 @@ module.exports = {
     ios: {},
     android: {},
   },
-  assets: ['./src/assets/'],
+  assets: [
+    './src/assets/',
+    'node_modules/@ant-design/icons-react-native/fonts',
+  ],
 };

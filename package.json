@@ -10,12 +10,11 @@
     "test": "jest"
   },
   "dependencies": {
-    "@rneui/base": "^0.0.0-edge.2",
-    "@rneui/themed": "^0.0.0-edge.2",
+    "@ant-design/icons-react-native": "^2.3.2",
+    "@ant-design/react-native": "^5.0.3",
     "react": "18.2.0",
     "react-native": "0.71.2",
-    "react-native-safe-area-context": "^4.5.0",
-    "react-native-vector-icons": "^9.2.0",
+    "react-native-asset": "^2.0.1",
     "react-router-native": "^6.8.0"
   },
   "devDependencies": {
@@ -28,6 +27,7 @@
     "@types/react": "^18.0.24",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.2.1",
+    "babel-plugin-import": "^1.13.6",
     "eslint": "^8.19.0",
     "jest": "^29.2.1",
     "metro-react-native-babel-preset": "0.73.7",
