@@ -5,11 +5,13 @@ const MyAnimations = () => {
   const [animation, setAnimation] = useState(new Animated.Value(0));
 
   useEffect(() => {
-    Animated.timing(animation, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: true,
-    }).start();
+    Animated.loop(
+      Animated.timing(animation, {
+        toValue: 1,
+        duration: 5000,
+        useNativeDriver: true,
+      }),
+    ).start();
   }, [animation]);
 
   const animatedStyle = {
@@ -18,7 +20,7 @@ const MyAnimations = () => {
 
   return (
     // eslint-disable-next-line react-native/no-inline-styles
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{flex: 1, alignItems: 'center'}}>
       <Animated.View
         style={[
           // eslint-disable-next-line react-native/no-inline-styles

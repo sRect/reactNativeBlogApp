@@ -7,6 +7,7 @@ const List = lazy(() => import('../pages/List'));
 const About = lazy(() => import('../pages/About'));
 const AnimatedDemo = lazy(() => import('../pages/AnimatedDemo'));
 const AniBase = lazy(() => import('../pages/AnimatedDemo/aniBase'));
+const AniParallel = lazy(() => import('../pages/AnimatedDemo/aniParallel'));
 
 const RouterConfig = () => {
   return (
@@ -16,7 +17,8 @@ const RouterConfig = () => {
         <Route path="/list" element={<List />} />
         <Route path="/about" element={<About />} />
         <Route path="/animatedDemo" element={<AnimatedDemo />}>
-          <Route path="/animatedDemo/aniBase" index element={AniBase} />
+          <Route path="/animatedDemo/aniBase" element={<AniBase />} />
+          <Route path="/animatedDemo/aniParallel" element={<AniParallel />} />
         </Route>
       </Routes>
     </NativeRouter>

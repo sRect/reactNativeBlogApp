@@ -49,7 +49,7 @@ const About = () => {
         <View style={styles.btnWrap}>
           <TouchableHighlight
             style={styles.btn}
-            onPress={() => navigate('/animatedDemo')}>
+            onPress={() => navigate('/animatedDemo/aniBase')}>
             <Text style={styles.btnText}>go to animated</Text>
           </TouchableHighlight>
         </View>
