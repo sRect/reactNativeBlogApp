@@ -4,16 +4,19 @@ import {
   Image,
   StyleSheet,
   Pressable,
-  useWindowDimensions,
+  // useWindowDimensions,
   Alert,
   Vibration,
   Platform,
   ToastAndroid,
+  TouchableHighlight,
+  Text,
 } from 'react-native';
 import {useNavigate} from 'react-router-native';
+import {WingBlank, WhiteSpace} from '@ant-design/react-native';
 
 const About = () => {
-  const {height: windowHeight} = useWindowDimensions();
+  // const {height: windowHeight} = useWindowDimensions();
   const navigate = useNavigate();
 
   const openModal = () => {
@@ -33,14 +36,25 @@ const About = () => {
   };
 
   return (
-    <View style={{...styles.wrapper, height: windowHeight}}>
-      <Pressable onPress={openModal}>
-        <Image
-          source={require('../../assets/img/test2.png')}
-          resizeMode="contain"
-        />
-      </Pressable>
-    </View>
+    <WingBlank>
+      <View style={styles.wrapper}>
+        <Pressable onPress={openModal}>
+          <Image
+            source={require('../../assets/img/test2.png')}
+            resizeMode="contain"
+          />
+        </Pressable>
+        <WhiteSpace />
+
+        <View style={styles.btnWrap}>
+          <TouchableHighlight
+            style={styles.btn}
+            onPress={() => navigate('/animatedDemo')}>
+            <Text style={styles.btnText}>go to animated</Text>
+          </TouchableHighlight>
+        </View>
+      </View>
+    </WingBlank>
   );
 };
 
@@ -48,8 +62,22 @@ const styles = StyleSheet.create({
   wrapper: {
     // flex: 1,
     backgroundColor: '#f0f0f0',
-    padding: 20,
+    paddingTop: 20,
     alignItems: 'center',
+  },
+  btnWrap: {
+    width: '100%',
+  },
+  btn: {
+    padding: 12,
+    borderColor: 'blue',
+    borderWidth: 1,
+    borderRadius: 4,
+    alignItems: 'center',
+  },
+  btnText: {
+    fontFamily: '',
+    color: '#333333',
   },
 });
 

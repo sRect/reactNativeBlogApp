@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "devtools": "npx react-devtools"
   },
   "dependencies": {
     "@ant-design/icons-react-native": "^2.3.2",
