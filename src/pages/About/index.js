@@ -7,13 +7,13 @@ import {
   // useWindowDimensions,
   Alert,
   Vibration,
-  Platform,
-  ToastAndroid,
+  // Platform,
+  // ToastAndroid,
   TouchableHighlight,
   Text,
 } from 'react-native';
 import {useNavigate} from 'react-router-native';
-import {WingBlank, WhiteSpace} from '@ant-design/react-native';
+import {WingBlank, WhiteSpace, Toast} from '@ant-design/react-native';
 
 const About = () => {
   // const {height: windowHeight} = useWindowDimensions();
@@ -25,13 +25,24 @@ const About = () => {
         text: '否',
         onPress: () => {
           Vibration.vibrate(200);
-          if (Platform.OS === 'android') {
-            ToastAndroid.show('你个小黑粉', 500);
-          }
+          Toast.info({
+            content: '你个小黑粉',
+            duration: 1,
+            stackable: true,
+          });
         },
         style: 'cancel',
       },
-      {text: '是', onPress: () => navigate(-1)},
+      {
+        text: '是',
+        onPress: () => {
+          Toast.success({
+            content: <Text style={styles.ikun}>你是真ikun</Text>,
+            duration: 2,
+            stackable: true,
+          });
+        },
+      },
     ]);
   };
 
@@ -78,6 +89,10 @@ const styles = StyleSheet.create({
   btnText: {
     fontFamily: '',
     color: '#333333',
+  },
+  ikun: {
+    fontFamily: '',
+    color: '#ffffff',
   },
 });
 

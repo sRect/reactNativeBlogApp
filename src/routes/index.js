@@ -1,5 +1,6 @@
 import React, {lazy} from 'react';
 import {NativeRouter, Routes, Route} from 'react-router-native';
+import ResetBack from '../components/ResetBack';
 
 import Home from '../pages/Home';
 
@@ -12,6 +13,7 @@ const AniParallel = lazy(() => import('../pages/AnimatedDemo/aniParallel'));
 const RouterConfig = () => {
   return (
     <NativeRouter>
+      <ResetBack />
       <Routes>
         <Route path="/" index element={<Home />} />
         <Route path="/list" element={<List />} />
