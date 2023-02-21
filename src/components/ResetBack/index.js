@@ -15,7 +15,7 @@ const ResetBack = () => {
 
       if (numRef.current === 0) {
         Toast.info({
-          content: <Text style={styles.txt}>在滑一次关闭应用</Text>,
+          content: <Text style={styles.txt}>在滑一次退出</Text>,
         });
 
         BackHandler.removeEventListener(

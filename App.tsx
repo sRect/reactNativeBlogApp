@@ -1,11 +1,27 @@
 import React, {Suspense} from 'react';
-import {View, SafeAreaView, Platform} from 'react-native';
+import {
+  View,
+  SafeAreaView,
+  Platform,
+  StatusBar,
+  useColorScheme,
+} from 'react-native';
 import {Provider, Button} from '@ant-design/react-native';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import RouterConfig from './src/routes';
 
 const App = () => {
+  const isDarkMode = useColorScheme() === 'dark';
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
+
   return (
     <Provider>
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={backgroundStyle.backgroundColor}
+      />
       {Platform.OS === 'android' ? (
         <View>
           <Suspense fallback={<Button loading>loading button</Button>}>

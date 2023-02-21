@@ -8,10 +8,8 @@
 import React, {memo, Fragment, useRef, useEffect} from 'react';
 import {
   SafeAreaView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
   ImageBackground,
   useWindowDimensions,
@@ -22,17 +20,10 @@ import {
 } from 'react-native';
 import {useNavigate} from 'react-router-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-
 function Home() {
   const navigate = useNavigate();
-  const isDarkMode = useColorScheme() === 'dark';
 
   const scale = useRef(new Animated.Value(1)).current;
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
 
   useEffect(() => {
     Animated.loop(
@@ -58,10 +49,6 @@ function Home() {
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
       <View style={styles.wrapper}>
         <Animated.View style={[styles.animateView, {transform: [{scale}]}]}>
           <ImageBackground
