@@ -6,34 +6,87 @@ import {
   StyleSheet,
   StatusBar,
   RefreshControl,
+  TouchableOpacity,
 } from 'react-native';
+import {useNavigate} from 'react-router-native';
 import {WingBlank, Toast} from '@ant-design/react-native';
+import {IconOutline} from '@ant-design/icons-react-native';
 import Empty from '../../components/Empty';
 import {sleep} from '../../utils';
 
+const tagColors = ['#999', '#1677ff', '#00b578', '#ff8f1f', '#ff3141'];
+
 const DATA = [
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
+    id: 'Pg3g452hZCa-p4SregxcJ',
+    title: '仿抖音左右歪头图片选择',
+    keywords: ['face-api', ' 人脸识别', ' 抖音'],
+    date: '2022-11-29',
+    fileName: 'face-api',
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
+    id: 'zK98CqmnhJBFi7g9jhdoc',
+    title: 'uniapp 打包 h5 问题总结',
+    keywords: ['uniapp', ' webpack4.x'],
+    date: '2022-08-08',
+    fileName: 'uniapp',
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    id: '7BPmFqcDsuU3nUVspQJY5',
+    title: 'Taro与微信小程序原生组件之间的事件通信',
+    keywords: [
+      'taro',
+      'wemark',
+      'face-api',
+      ' 人脸识别',
+      ' 抖音',
+      'wemark',
+      'face-api',
+      ' 人脸识别',
+    ],
+    date: '2022-04-04',
+    fileName: 'taro-wemark',
   },
 ];
 
 const MyList = () => {
   const [refreshing, setRefreshing] = useState(false);
+  const navigate = useNavigate();
+
+  const gotoDetail = () => {
+    navigate('/detail');
+  };
 
   const renderItem = ({item}) => {
     return (
-      <View style={styles.item}>
-        <Text style={styles.title}>{item.title}</Text>
-      </View>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        style={styles.item}
+        onPress={gotoDetail}>
+        <View style={styles.itemLeft}>
+          <View>
+            <Text style={styles.title}>{item.title}</Text>
+          </View>
+          <View style={styles.tagWrap}>
+            {item.keywords.map((text, key) => (
+              <View style={styles.tag} key={key}>
+                <Text
+                  style={styles.tagText(
+                    tagColors[Math.floor(Math.random() * 5)],
+                  )}>
+                  {text}
+                </Text>
+              </View>
+            ))}
+          </View>
+          <View>
+            <Text style={styles.date}>{item.date}</Text>
+          </View>
+        </View>
+        <View style={styles.itemRight}>
+          <IconOutline name="right" size={20} color="#ccc" />
+        </View>
+      </TouchableOpacity>
     );
   };
 
@@ -50,12 +103,27 @@ const MyList = () => {
   }, []);
 
   return (
-    <WingBlank size="sm">
+    <WingBlank>
       <FlatList
         data={DATA}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         ListEmptyComponent={<Empty />}
+        ItemSeparatorComponent={
+          <View
+            borderStyle="solid"
+            borderColor="#f0f0f0"
+            borderLeftWidth={0}
+            borderRightWidth={0}
+            borderBottomWidth={0}
+            borderTopWidth={1}
+          />
+        }
+        ListFooterComponent={
+          <View style={styles.footer}>
+            <Text style={styles.footerText}>--已经到底了--</Text>
+          </View>
+        }
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -74,14 +142,56 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
   },
   item: {
-    backgroundColor: '#f9c2ff',
-    paddingTop: 20,
-    paddingBottom: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    width: '100%',
+    backgroundColor: '#fff',
+    paddingTop: 12,
+    paddingBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  itemLeft: {
+    flex: 0.9,
+  },
+  itemRight: {
+    flex: 0.1,
+    alignItems: 'flex-end',
   },
   title: {
-    fontSize: 32,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  tagWrap: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  tag: {
+    padding: 5,
+    paddingStart: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tagText: color => ({
+    fontSize: 12,
+    color: '#fff',
+    backgroundColor: color,
+    padding: 5,
+    fontFamily: '',
+  }),
+  date: {
+    color: '#999',
+    fontSize: 15,
+  },
+  footer: {
+    width: '100%',
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  footerText: {
+    color: '#ccc',
+    fontSize: 14,
+    fontFamily: '',
   },
 });
 
