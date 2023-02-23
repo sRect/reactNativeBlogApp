@@ -18,7 +18,7 @@ const RouterConfig = () => {
       <Routes>
         <Route path="/" index element={<Home />} />
         <Route path="/list" element={<List />} />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:detailId" element={<Detail />} />
         <Route path="/about" element={<About />} />
         <Route path="/animatedDemo" element={<AnimatedDemo />}>
           <Route path="/animatedDemo/aniBase" element={<AniBase />} />

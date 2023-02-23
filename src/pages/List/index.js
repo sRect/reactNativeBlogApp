@@ -1,4 +1,4 @@
-import React, {memo, useState, useCallback} from 'react';
+import React, {memo, useState, useCallback, useEffect} from 'react';
 import {
   FlatList,
   View,
@@ -13,48 +13,36 @@ import {WingBlank, Toast} from '@ant-design/react-native';
 import {IconOutline} from '@ant-design/icons-react-native';
 import Empty from '../../components/Empty';
 import {sleep} from '../../utils';
+import {getArticleList} from '../../api';
 
 const tagColors = ['#999', '#1677ff', '#00b578', '#ff8f1f', '#ff3141'];
 
-const DATA = [
-  {
-    id: 'Pg3g452hZCa-p4SregxcJ',
-    title: '仿抖音左右歪头图片选择',
-    keywords: ['face-api', ' 人脸识别', ' 抖音'],
-    date: '2022-11-29',
-    fileName: 'face-api',
-  },
-  {
-    id: 'zK98CqmnhJBFi7g9jhdoc',
-    title: 'uniapp 打包 h5 问题总结',
-    keywords: ['uniapp', ' webpack4.x'],
-    date: '2022-08-08',
-    fileName: 'uniapp',
-  },
-  {
-    id: '7BPmFqcDsuU3nUVspQJY5',
-    title: 'Taro与微信小程序原生组件之间的事件通信',
-    keywords: [
-      'taro',
-      'wemark',
-      'face-api',
-      ' 人脸识别',
-      ' 抖音',
-      'wemark',
-      'face-api',
-      ' 人脸识别',
-    ],
-    date: '2022-04-04',
-    fileName: 'taro-wemark',
-  },
-];
-
 const MyList = () => {
+  const [list, setList] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const navigate = useNavigate();
 
-  const gotoDetail = () => {
-    navigate('/detail');
+  const gotoDetail = detailId => {
+    console.log('data==>', detailId);
+
+    navigate('/detail/' + detailId);
+  };
+
+  const queryList = async () => {
+    const [err, data] = await getArticleList();
+
+    console.log('err==>', err);
+    console.log('data==>', data);
+
+    if (err) {
+      Toast.fail({
+        content: <Text style={styles.toastText}>加载失败,请重试</Text>,
+        duration: 2,
+      });
+      return;
+    }
+
+    setList(data);
   };
 
   const renderItem = ({item}) => {
@@ -62,7 +50,7 @@ const MyList = () => {
       <TouchableOpacity
         activeOpacity={0.8}
         style={styles.item}
-        onPress={gotoDetail}>
+        onPress={() => gotoDetail(item.fileName)}>
         <View style={styles.itemLeft}>
           <View>
             <Text style={styles.title}>{item.title}</Text>
@@ -90,25 +78,49 @@ const MyList = () => {
     );
   };
 
+  // 下拉刷新
   const onRefresh = useCallback(() => {
     setRefreshing(true);
 
     sleep(2000).then(() => {
       Toast.info({
         content: '刷新成功',
-        mask: true,
+        // mask: true,
+        duration: 2,
       });
       setRefreshing(false);
     });
   }, []);
 
+  const handleEndReached = () => {
+    console.log('即将到底部');
+  };
+
+  useEffect(() => {
+    if (!refreshing) {
+      return;
+    }
+
+    queryList();
+
+    return () => {
+      setRefreshing(false);
+    };
+  }, [refreshing]);
+
+  useEffect(() => {
+    queryList();
+  }, []);
+
   return (
-    <WingBlank>
+    <WingBlank size="md">
       <FlatList
-        data={DATA}
+        data={list}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         ListEmptyComponent={<Empty />}
+        onEndReachedThreshold={0.5}
+        onEndReached={handleEndReached}
         ItemSeparatorComponent={
           <View
             borderStyle="solid"
@@ -191,6 +203,10 @@ const styles = StyleSheet.create({
   footerText: {
     color: '#ccc',
     fontSize: 14,
+    fontFamily: '',
+  },
+  toastText: {
+    color: '#fff',
     fontFamily: '',
   },
 });
