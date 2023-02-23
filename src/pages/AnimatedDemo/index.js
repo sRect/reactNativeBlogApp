@@ -2,6 +2,7 @@ import React, {memo, useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Outlet, useNavigate} from 'react-router-native';
 import {Tabs, WhiteSpace} from '@ant-design/react-native';
+import NavBar from '../../components/NavBar';
 
 const tabs = [{title: 'aniBase'}, {title: 'aniParallel'}];
 
@@ -16,16 +17,23 @@ const AnimatedDemo = () => {
   };
 
   return (
-    <View style={styles.wrap}>
-      <View style={styles.tabsWrap}>
-        <Tabs tabs={tabs} initialPage={tabIndex} onTabClick={handleTabClick} />
-      </View>
-      <WhiteSpace size="large" />
+    <>
+      <NavBar title="animated demo" />
+      <View style={styles.wrap}>
+        <View style={styles.tabsWrap}>
+          <Tabs
+            tabs={tabs}
+            initialPage={tabIndex}
+            onTabClick={handleTabClick}
+          />
+        </View>
+        <WhiteSpace size="large" />
 
-      <View>
-        <Outlet />
+        <View>
+          <Outlet />
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 

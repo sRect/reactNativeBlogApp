@@ -17,7 +17,8 @@
     "react-native": "0.71.2",
     "react-native-asset": "^2.0.1",
     "react-native-webview": "^11.26.1",
-    "react-router-native": "^6.8.0"
+    "react-router-native": "^6.8.0",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

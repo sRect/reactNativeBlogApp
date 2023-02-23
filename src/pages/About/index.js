@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import {useNavigate} from 'react-router-native';
 import {WingBlank, WhiteSpace, Toast} from '@ant-design/react-native';
+import NavBar from '../../components/NavBar';
 
 const About = () => {
   // const {height: windowHeight} = useWindowDimensions();
@@ -47,25 +48,28 @@ const About = () => {
   };
 
   return (
-    <WingBlank>
-      <View style={styles.wrapper}>
-        <Pressable onPress={openModal}>
-          <Image
-            source={require('../../assets/img/test2.png')}
-            resizeMode="contain"
-          />
-        </Pressable>
-        <WhiteSpace />
+    <>
+      <NavBar title="关于我" />
+      <WingBlank size="md">
+        <View style={styles.wrapper}>
+          <Pressable onPress={openModal}>
+            <Image
+              source={require('../../assets/img/test2.png')}
+              resizeMode="contain"
+            />
+          </Pressable>
+          <WhiteSpace />
 
-        <View style={styles.btnWrap}>
-          <TouchableHighlight
-            style={styles.btn}
-            onPress={() => navigate('/animatedDemo/aniBase')}>
-            <Text style={styles.btnText}>go to animated</Text>
-          </TouchableHighlight>
+          <View style={styles.btnWrap}>
+            <TouchableHighlight
+              style={styles.btn}
+              onPress={() => navigate('/animatedDemo/aniBase')}>
+              <Text style={styles.btnText}>go to animated</Text>
+            </TouchableHighlight>
+          </View>
         </View>
-      </View>
-    </WingBlank>
+      </WingBlank>
+    </>
   );
 };
 

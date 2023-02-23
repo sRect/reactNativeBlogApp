@@ -1,4 +1,4 @@
-import React, {memo, useState, useCallback, useEffect} from 'react';
+import React, {memo, useState, useCallback, useEffect, useRef} from 'react';
 import {
   FlatList,
   View,
@@ -12,15 +12,23 @@ import {useNavigate} from 'react-router-native';
 import {WingBlank, Toast} from '@ant-design/react-native';
 import {IconOutline} from '@ant-design/icons-react-native';
 import Empty from '../../components/Empty';
+import NavBar from '../../components/NavBar';
+import MyDoubleClickButton from '../../components/DoubleClickBtn';
 import {sleep} from '../../utils';
 import {getArticleList} from '../../api';
 
 const tagColors = ['#999', '#1677ff', '#00b578', '#ff8f1f', '#ff3141'];
+const titleStyle = {
+  fontFamily: '',
+  color: '#333',
+  fontSize: 17,
+};
 
 const MyList = () => {
   const [list, setList] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const navigate = useNavigate();
+  const flatListRef = useRef(null);
 
   const gotoDetail = detailId => {
     console.log('data==>', detailId);
@@ -32,7 +40,7 @@ const MyList = () => {
     const [err, data] = await getArticleList();
 
     console.log('err==>', err);
-    console.log('data==>', data);
+    // console.log('data==>', data);
 
     if (err) {
       Toast.fail({
@@ -85,7 +93,7 @@ const MyList = () => {
     sleep(2000).then(() => {
       Toast.info({
         content: '刷新成功',
-        // mask: true,
+        mask: false,
         duration: 2,
       });
       setRefreshing(false);
@@ -113,38 +121,59 @@ const MyList = () => {
   }, []);
 
   return (
-    <WingBlank size="md">
-      <FlatList
-        data={list}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        ListEmptyComponent={<Empty />}
-        onEndReachedThreshold={0.5}
-        onEndReached={handleEndReached}
-        ItemSeparatorComponent={
-          <View
-            borderStyle="solid"
-            borderColor="#f0f0f0"
-            borderLeftWidth={0}
-            borderRightWidth={0}
-            borderBottomWidth={0}
-            borderTopWidth={1}
-          />
-        }
-        ListFooterComponent={
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>--已经到底了--</Text>
-          </View>
-        }
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            title="加载中..."
-          />
-        }
-      />
-    </WingBlank>
+    <>
+      <NavBar title="文章列表">
+        <MyDoubleClickButton
+          onPress={() => {
+            // 双击title，列表回到顶部
+            console.log('double click');
+            if (flatListRef.current) {
+              flatListRef.current.scrollToOffset({
+                animated: true,
+                offset: 0,
+              });
+            }
+          }}
+          title="文章列表"
+          doubleClickTime={300}
+          textStyle={titleStyle}
+        />
+      </NavBar>
+      <WingBlank size="md">
+        <FlatList
+          style={{marginBottom: (StatusBar.currentHeight || 0) + 60}}
+          ref={flatListRef}
+          data={list}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          ListEmptyComponent={<Empty />}
+          onEndReachedThreshold={0.5}
+          onEndReached={handleEndReached}
+          ItemSeparatorComponent={
+            <View
+              borderStyle="solid"
+              borderColor="#f0f0f0"
+              borderLeftWidth={0}
+              borderRightWidth={0}
+              borderBottomWidth={0}
+              borderTopWidth={1}
+            />
+          }
+          ListFooterComponent={
+            <View style={styles.footer}>
+              <Text style={styles.footerText}>--已经到底了--</Text>
+            </View>
+          }
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              title="加载中..."
+            />
+          }
+        />
+      </WingBlank>
+    </>
   );
 };
 
