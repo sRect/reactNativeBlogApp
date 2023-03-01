@@ -10,22 +10,9 @@ import {WebView} from 'react-native-webview';
 import {Result} from '@ant-design/react-native';
 import {IconFill} from '@ant-design/icons-react-native';
 
-// <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-// 页面设置meta标签，禁止缩放
-const INJECTED_JAVASCRIPT_BEFORE = `
-  var headEl = document.querySelector('head');
-  var viewport = document.createElement("meta");
-  viewport.setAttribute("name", "viewport");
-  viewport.setAttribute("content", "width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0");
-
-  headEl.appendChild(viewport);
-`;
-
 const INJECTED_JAVASCRIPT = `
   var navBtn = document.querySelector(".adm-nav-bar-back");
   var aEl = document.querySelectorAll("a");
-
-  ${INJECTED_JAVASCRIPT_BEFORE}
 
   [...aEl].forEach(el => {
     el.style.color="#0969da";
@@ -57,7 +44,7 @@ const Detail = () => {
   };
 
   const handleOnWebViewMsg = e => {
-    console.log('handleOnWebViewMsg==>', e);
+    // console.log('handleOnWebViewMsg==>', e);
     numRef.current++;
 
     if (numRef.current > 1) {
@@ -65,6 +52,10 @@ const Detail = () => {
     }
 
     if (e && e.nativeEvent && e.nativeEvent.data === 'goback') {
+      // navigate('/list', {
+      //   replace: true,
+      //   state: 'back',
+      // });
       navigate(-1);
     }
   };
@@ -74,8 +65,6 @@ const Detail = () => {
       source={{uri: `http://1.15.42.2:3000/posts/${detailId || ''}`}}
       containerStyle={[styles.container, {height: window.height}]}
       injectedJavaScript={INJECTED_JAVASCRIPT}
-      injectJavaScript={INJECTED_JAVASCRIPT_BEFORE}
-      injectedJavaScriptBeforeContentLoaded={INJECTED_JAVASCRIPT_BEFORE}
       startInLoadingState={loadingState}
       renderLoading={() => (
         <View style={styles.loading}>
