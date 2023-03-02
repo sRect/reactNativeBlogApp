@@ -60,13 +60,13 @@ const About = () => {
           </Pressable>
           <WhiteSpace />
 
-          <View style={styles.btnWrap}>
-            <TouchableHighlight
-              style={styles.btn}
-              onPress={() => navigate('/animatedDemo/aniBase')}>
+          <TouchableHighlight
+            style={styles.btn}
+            onPress={() => navigate('/animatedDemo/aniBase')}>
+            <View style={styles.btnWrap}>
               <Text style={styles.btnText}>go to animated</Text>
-            </TouchableHighlight>
-          </View>
+            </View>
+          </TouchableHighlight>
         </View>
       </WingBlank>
     </>
@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
   },
   btnWrap: {
     width: '100%',
+    background: '#fff',
   },
   btn: {
     padding: 12,

@@ -2,12 +2,12 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "src/assets/img/bg.png",
-      "sha1": "9a36f1700ea62b4bf3b58165785a8d092814fa85"
-    },
-    {
       "path": "src/assets/img/list.png",
       "sha1": "a5d3a72900404c48e1fa776d28570ae5d5c575c5"
+    },
+    {
+      "path": "src/assets/img/mybg.png",
+      "sha1": "9a36f1700ea62b4bf3b58165785a8d092814fa85"
     },
     {
       "path": "src/assets/img/test2.png",

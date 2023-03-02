@@ -8,7 +8,9 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "devtools": "npx react-devtools"
+    "devtools": "npx react-devtools",
+    "build:android": "cd android && sh ./gradlew assembleRelease",
+    "test:android": "npx react-native run-android --variant=release"
   },
   "dependencies": {
     "@ant-design/icons-react-native": "^2.3.2",

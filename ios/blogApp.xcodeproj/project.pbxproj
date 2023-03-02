@@ -16,10 +16,10 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		17F4D229064241FA9DADF5F9 /* antfill.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55B8901E91A143EAAE8F3273 /* antfill.ttf */; };
 		84D2427C0945425382A3E08D /* antoutline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50B73EEB17414BA8922B5556 /* antoutline.ttf */; };
-		B8C67D388AD74A96A8FD32F2 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 38D47DF191FF4B7AA8D05222 /* bg.png */; };
 		CC1FBC588B3548E1ADBC89E4 /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = B82DCD3481124F46A15F3BE4 /* list.png */; };
 		C8D38DF20BAF4FF6ABCE7B0B /* test2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B499692087D4991BCD948EC /* test2.png */; };
 		CD8DFD3E7E6B44E086629852 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 026892065D754CD9A4991467 /* user.png */; };
+		9C07824A826D473EBE09CF9A /* mybg.png in Resources */ = {isa = PBXBuildFile; fileRef = 324AFA19230A4F56B0064B68 /* mybg.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,10 +52,10 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		55B8901E91A143EAAE8F3273 /* antfill.ttf */ = {isa = PBXFileReference; name = "antfill.ttf"; path = "../node_modules/@ant-design/icons-react-native/fonts/antfill.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		50B73EEB17414BA8922B5556 /* antoutline.ttf */ = {isa = PBXFileReference; name = "antoutline.ttf"; path = "../node_modules/@ant-design/icons-react-native/fonts/antoutline.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		38D47DF191FF4B7AA8D05222 /* bg.png */ = {isa = PBXFileReference; name = "bg.png"; path = "../src/assets/img/bg.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		B82DCD3481124F46A15F3BE4 /* list.png */ = {isa = PBXFileReference; name = "list.png"; path = "../src/assets/img/list.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		8B499692087D4991BCD948EC /* test2.png */ = {isa = PBXFileReference; name = "test2.png"; path = "../src/assets/img/test2.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		026892065D754CD9A4991467 /* user.png */ = {isa = PBXFileReference; name = "user.png"; path = "../src/assets/img/user.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		324AFA19230A4F56B0064B68 /* mybg.png */ = {isa = PBXFileReference; name = "mybg.png"; path = "../src/assets/img/mybg.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,10 +166,10 @@
 			children = (
 				55B8901E91A143EAAE8F3273 /* antfill.ttf */,
 				50B73EEB17414BA8922B5556 /* antoutline.ttf */,
-				38D47DF191FF4B7AA8D05222 /* bg.png */,
 				B82DCD3481124F46A15F3BE4 /* list.png */,
 				8B499692087D4991BCD948EC /* test2.png */,
 				026892065D754CD9A4991467 /* user.png */,
+				324AFA19230A4F56B0064B68 /* mybg.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -273,10 +273,10 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				17F4D229064241FA9DADF5F9 /* antfill.ttf in Resources */,
 				84D2427C0945425382A3E08D /* antoutline.ttf in Resources */,
-				B8C67D388AD74A96A8FD32F2 /* bg.png in Resources */,
 				CC1FBC588B3548E1ADBC89E4 /* list.png in Resources */,
 				C8D38DF20BAF4FF6ABCE7B0B /* test2.png in Resources */,
 				CD8DFD3E7E6B44E086629852 /* user.png in Resources */,
+				9C07824A826D473EBE09CF9A /* mybg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

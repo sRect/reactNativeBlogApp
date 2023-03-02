@@ -52,7 +52,7 @@ function Home() {
       <View style={styles.wrapper}>
         <Animated.View style={[styles.animateView, {transform: [{scale}]}]}>
           <ImageBackground
-            source={require('../../assets/img/bg.png')}
+            source={require('../../assets/img/mybg.png')}
             resizeMode="cover"
             style={{
               ...styles.backgroundImg,
