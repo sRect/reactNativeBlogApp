@@ -10,6 +10,7 @@
     "test": "jest",
     "devtools": "npx react-devtools",
     "build:android": "cd android && sh ./gradlew assembleRelease",
+    "build:android:aab": "cd android && sh ./gradlew bundleRelease",
     "test:android": "npx react-native run-android --variant=release"
   },
   "dependencies": {
