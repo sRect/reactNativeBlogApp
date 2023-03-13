@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "postversion": "react-native-version",
+    "preandroid": "touch .env && cat .env.development > .env",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",

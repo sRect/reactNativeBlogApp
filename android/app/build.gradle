@@ -114,6 +114,11 @@ android {
         versionName "0.0.2"
         // for react-native-config
         resValue "string", "build_config_package", "com.blogapp"
+        // AndroidManifest.xml权限节点控制
+        // readPhoneState project.env.get("READ_PHONE_STATE_ENV").toInteger()
+        // writeExternalStorage project.env.get("WRITE_EXTERNAL_STORAGE").toInteger()
+        // readExternalStorage project.env.get("READ_EXTERNAL_STORAGE").toInteger()
+        // checkLicense project.env.get("CHECK_LICENSE").toInteger()
     }
 
     splits {
@@ -144,6 +149,12 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            manifestPlaceholders = [
+              READ_PHONE_STATE: "true", 
+              WRITE_EXTERNAL_STORAGE: "true",
+              READ_EXTERNAL_STORAGE: "true",
+              CHECK_LICENSE: "true"
+            ]
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -152,6 +163,12 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            manifestPlaceholders = [
+              READ_PHONE_STATE: "false",
+              WRITE_EXTERNAL_STORAGE: "false",
+              READ_EXTERNAL_STORAGE: "false",
+              CHECK_LICENSE: "false"
+            ]
         }
     }
 
