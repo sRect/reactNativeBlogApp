@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useEffect} from 'react';
 import {
   View,
   Image,
@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import {useNavigate} from 'react-router-native';
 import {WingBlank, WhiteSpace, Toast} from '@ant-design/react-native';
+import Config from 'react-native-config';
 import NavBar from '../../components/NavBar';
 
 const About = () => {
@@ -46,6 +47,13 @@ const About = () => {
       },
     ]);
   };
+
+  useEffect(() => {
+    console.log('Config==>', Config);
+    console.log('BASE_URL==>', Config.BASE_URL);
+    console.log('NODE_ENV==>', Config.NODE_ENV);
+    console.log('MY_VARIABLE_ENV==>', Config.MY_VARIABLE_ENV);
+  }, []);
 
   return (
     <>

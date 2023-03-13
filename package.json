@@ -10,9 +10,10 @@
     "start": "react-native start",
     "test": "jest",
     "devtools": "npx react-devtools",
-    "build:android": "cd android && sh ./gradlew assembleRelease",
-    "build:android:aab": "cd android && sh ./gradlew bundleRelease",
-    "test:android": "npx react-native run-android --variant=release"
+    "build:android": "cd android && ./gradlew assembleRelease",
+    "build:android:aab": "cd android && ./gradlew bundleRelease",
+    "install:android": "npx react-native run-android --variant=release",
+    "gradlew:clean": "cd android && ./gradlew clean"
   },
   "dependencies": {
     "@ant-design/icons-react-native": "^2.3.2",
@@ -20,6 +21,7 @@
     "react": "18.2.0",
     "react-native": "0.71.2",
     "react-native-asset": "^2.0.1",
+    "react-native-config": "^1.5.0",
     "react-native-webview": "^11.26.1",
     "react-router-native": "^6.8.0",
     "styled-components": "^5.3.6"
