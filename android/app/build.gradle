@@ -91,10 +91,10 @@ def reactNativeArchitectures() {
 }
 
 // AndroidManifest.xml uses-permission 权限
-def READ_PHONE_STATE_ENV = project.env.get("READ_PHONE_STATE_ENV").toInteger() == 1 ? true : false
-def WRITE_EXTERNAL_STORAGE_ENV = project.env.get("WRITE_EXTERNAL_STORAGE_ENV").toInteger() == 1 ? true : false
-def READ_EXTERNAL_STORAGE_ENV = project.env.get("READ_EXTERNAL_STORAGE_ENV").toInteger() == 1 ? true : false
-def CHECK_LICENSE_ENV = project.env.get("CHECK_LICENSE_ENV").toInteger() == 1 ? true : false
+def READ_PHONE_STATE_ENV = project.env.get("READ_PHONE_STATE_ENV").toInteger() == 1 ? "true" : "false"
+def WRITE_EXTERNAL_STORAGE_ENV = project.env.get("WRITE_EXTERNAL_STORAGE_ENV").toInteger() == 1 ? "true" : "false"
+def READ_EXTERNAL_STORAGE_ENV = project.env.get("READ_EXTERNAL_STORAGE_ENV").toInteger() == 1 ? "true" : "false"
+def CHECK_LICENSE_ENV = project.env.get("CHECK_LICENSE_ENV").toInteger() == 1 ? "true" : "false"
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -181,6 +181,7 @@ android {
               READ_EXTERNAL_STORAGE: READ_EXTERNAL_STORAGE_ENV,
               CHECK_LICENSE: CHECK_LICENSE_ENV
             ]
+            // resValue "string", "build_config_package", "com.blogapp"
         }
     }
 
