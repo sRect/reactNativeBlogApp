@@ -12,8 +12,8 @@
     "devtools": "npx react-devtools",
     "build:android": "cd android && ENVFILE=.env.production ./gradlew assembleRelease",
     "build:android:aab": "cd android && ENVFILE=.env.production ./gradlew bundleRelease",
-    "install:android": "npx react-native run-android --variant=release",
-    "gradlew:clean": "cd android && ./gradlew clean"
+    "install:android": "ENVFILE=.env.production npx react-native run-android --variant=release",
+    "gradlew:clean": "cd android &&  ENVFILE=.env.production ./gradlew clean"
   },
   "dependencies": {
     "@ant-design/icons-react-native": "^2.3.2",
