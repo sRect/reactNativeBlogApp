@@ -1,4 +1,4 @@
-import React, {memo, useEffect} from 'react';
+import React, {memo, useRef} from 'react';
 import {
   View,
   Image,
@@ -9,17 +9,19 @@ import {
   Vibration,
   // Platform,
   // ToastAndroid,
-  TouchableHighlight,
+  // TouchableHighlight,
   Text,
+  AppState,
 } from 'react-native';
 import {useNavigate} from 'react-router-native';
-import {WingBlank, WhiteSpace, Toast} from '@ant-design/react-native';
+import {WingBlank, WhiteSpace, Toast, List} from '@ant-design/react-native';
 import Config from 'react-native-config';
 import NavBar from '../../components/NavBar';
 
 const About = () => {
   // const {height: windowHeight} = useWindowDimensions();
   const navigate = useNavigate();
+  const appState = useRef(AppState.currentState);
 
   const openModal = () => {
     Alert.alert('只因太美', '只因与荔枝是兄弟吗', [
@@ -48,13 +50,6 @@ const About = () => {
     ]);
   };
 
-  useEffect(() => {
-    console.log('Config==>', Config);
-    console.log('BASE_URL==>', Config.BASE_URL);
-    console.log('NODE_ENV==>', Config.NODE_ENV);
-    console.log('MY_VARIABLE_ENV==>', Config.MY_VARIABLE_ENV);
-  }, []);
-
   return (
     <>
       <NavBar title="关于我" />
@@ -68,13 +63,36 @@ const About = () => {
           </Pressable>
           <WhiteSpace />
 
-          <TouchableHighlight
+          {/* <TouchableHighlight
             style={styles.btn}
             onPress={() => navigate('/animatedDemo/aniBase')}>
             <View style={styles.btnWrap}>
               <Text style={styles.btnText}>go to animated</Text>
             </View>
-          </TouchableHighlight>
+          </TouchableHighlight> */}
+
+          <List style={styles.listWrap}>
+            <List.Item
+              extra=""
+              arrow="horizontal"
+              onPress={() => navigate('/animatedDemo/aniBase')}>
+              animated demo
+            </List.Item>
+            <List.Item wrap extra={appState.current} arrow="empty">
+              appState
+            </List.Item>
+            <List.Item wrap extra={Config.BASE_URL} arrow="empty">
+              BASE_URL
+            </List.Item>
+            <List.Item
+              extra={Config.NODE_ENV === 'development' ? 'debug' : 'release'}
+              arrow="empty">
+              环境
+            </List.Item>
+            <List.Item extra={Config.VERSION_NAME} arrow="empty">
+              版本
+            </List.Item>
+          </List>
         </View>
       </WingBlank>
     </>
@@ -88,24 +106,12 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     alignItems: 'center',
   },
-  btnWrap: {
-    width: '100%',
-    background: '#fff',
-  },
-  btn: {
-    padding: 12,
-    borderColor: 'blue',
-    borderWidth: 1,
-    borderRadius: 4,
-    alignItems: 'center',
-  },
-  btnText: {
-    fontFamily: '',
-    color: '#333333',
-  },
   ikun: {
     fontFamily: '',
     color: '#ffffff',
+  },
+  listWrap: {
+    width: '100%',
   },
 });
 
