@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 apply plugin: "com.facebook.react"
 
 import com.android.build.OutputFile
@@ -89,6 +90,12 @@ def reactNativeArchitectures() {
     return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
 }
 
+// AndroidManifest.xml uses-permission 权限
+def READ_PHONE_STATE_ENV = project.env.get("READ_PHONE_STATE_ENV").toInteger() == 1 ? true : false
+def WRITE_EXTERNAL_STORAGE_ENV = project.env.get("WRITE_EXTERNAL_STORAGE_ENV").toInteger() == 1 ? true : false
+def READ_EXTERNAL_STORAGE_ENV = project.env.get("READ_EXTERNAL_STORAGE_ENV").toInteger() == 1 ? true : false
+def CHECK_LICENSE_ENV = project.env.get("CHECK_LICENSE_ENV").toInteger() == 1 ? true : false
+
 android {
     ndkVersion rootProject.ext.ndkVersion
 
@@ -100,10 +107,10 @@ android {
 
     // project.ext.defaultEnvFile = "path/to/.env.file"
     // 写在 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle" 这行之前
-    project.ext.envConfigFiles = [
-      debug: ".env.development",
-      release: ".env.production"
-    ]
+    // project.ext.envConfigFiles = [
+    //   debug: ".env.development",
+    //   release: ".env.production"
+    // ]
 
     namespace "com.blogapp"
     defaultConfig {
@@ -115,11 +122,16 @@ android {
         // for react-native-config
         resValue "string", "build_config_package", "com.blogapp"
         // AndroidManifest.xml权限节点控制
-        // readPhoneState project.env.get("READ_PHONE_STATE_ENV").toInteger()
+        // readPhoneState project.env.get("READ_PHONE_STATE_ENV")
         // writeExternalStorage project.env.get("WRITE_EXTERNAL_STORAGE").toInteger()
         // readExternalStorage project.env.get("READ_EXTERNAL_STORAGE").toInteger()
         // checkLicense project.env.get("CHECK_LICENSE").toInteger()
     }
+
+    println("READ_PHONE_STATE_ENV==>${READ_PHONE_STATE_ENV}")
+    println("WRITE_EXTERNAL_STORAGE_ENV==>${WRITE_EXTERNAL_STORAGE_ENV}")
+    println("READ_EXTERNAL_STORAGE_ENV==>${READ_EXTERNAL_STORAGE_ENV}")
+    println("CHECK_LICENSE_ENV==>${CHECK_LICENSE_ENV}")
 
     splits {
         abi {
@@ -150,10 +162,10 @@ android {
         debug {
             signingConfig signingConfigs.debug
             manifestPlaceholders = [
-              READ_PHONE_STATE: "true", 
-              WRITE_EXTERNAL_STORAGE: "true",
-              READ_EXTERNAL_STORAGE: "true",
-              CHECK_LICENSE: "true"
+              READ_PHONE_STATE: READ_PHONE_STATE_ENV, 
+              WRITE_EXTERNAL_STORAGE: WRITE_EXTERNAL_STORAGE_ENV,
+              READ_EXTERNAL_STORAGE: READ_EXTERNAL_STORAGE_ENV,
+              CHECK_LICENSE: CHECK_LICENSE_ENV
             ]
         }
         release {
@@ -164,10 +176,10 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             manifestPlaceholders = [
-              READ_PHONE_STATE: "false",
-              WRITE_EXTERNAL_STORAGE: "false",
-              READ_EXTERNAL_STORAGE: "false",
-              CHECK_LICENSE: "false"
+              READ_PHONE_STATE: READ_PHONE_STATE_ENV,
+              WRITE_EXTERNAL_STORAGE: WRITE_EXTERNAL_STORAGE_ENV,
+              READ_EXTERNAL_STORAGE: READ_EXTERNAL_STORAGE_ENV,
+              CHECK_LICENSE: CHECK_LICENSE_ENV
             ]
         }
     }
@@ -211,4 +223,3 @@ dependencies {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"

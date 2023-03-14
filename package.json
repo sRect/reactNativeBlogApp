@@ -4,15 +4,14 @@
   "private": true,
   "scripts": {
     "postversion": "react-native-version",
-    "preandroid": "touch .env && cat .env.development > .env",
-    "android": "react-native run-android",
+    "android": "ENVFILE=.env.development react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
     "devtools": "npx react-devtools",
-    "build:android": "cd android && ./gradlew assembleRelease",
-    "build:android:aab": "cd android && ./gradlew bundleRelease",
+    "build:android": "cd android && ENVFILE=.env.production ./gradlew assembleRelease",
+    "build:android:aab": "cd android && ENVFILE=.env.production ./gradlew bundleRelease",
     "install:android": "npx react-native run-android --variant=release",
     "gradlew:clean": "cd android && ./gradlew clean"
   },

@@ -3,9 +3,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission tools:node="remove" android:required="${READ_PHONE_STATE}" android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission tools:node="remove" android:required="${READ_PHONE_STATE}" android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission tools:node="remove" android:required="${READ_PHONE_STATE}" android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission tools:node="remove" android:required="${READ_PHONE_STATE}" android:name="android.vending.CHECK_LICENSE" />
+    <uses-permission tools:node="remove" android:required="${WRITE_EXTERNAL_STORAGE}" android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission tools:node="remove" android:required="${READ_EXTERNAL_STORAGE}" android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission tools:node="remove" android:required="${CHECK_LICENSE}" android:name="android.vending.CHECK_LICENSE" />
 
     <application
       android:name=".MainApplication"
