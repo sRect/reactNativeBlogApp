@@ -4,23 +4,40 @@ import {
   useWindowDimensions,
   ActivityIndicator,
   View,
+  Image,
+  Modal,
+  // Text,
 } from 'react-native';
 import {useParams, useNavigate} from 'react-router-native';
 import {WebView} from 'react-native-webview';
 import {Result} from '@ant-design/react-native';
 import {IconFill} from '@ant-design/icons-react-native';
+// import githubCss from 'github-syntax-light/lib/github-light.css';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 const INJECTED_JAVASCRIPT = `
   var navBtn = document.querySelector(".adm-nav-bar-back");
   var aEl = document.querySelectorAll("a");
+  var code = document.querySelectorAll("pre");
+  var imgList = document.querySelectorAll("img");
 
   [...aEl].forEach(el => {
     el.style.color="#0969da";
   });
 
+  [...code].forEach(el => {
+    el.style.backgroundColor="#f6f8fa";
+  });
+
   navBtn.addEventListener("click", () => {
-    window.ReactNativeWebView.postMessage("goback");
+    window.ReactNativeWebView.postMessage(JSON.stringify({type: "goback"}));
   }, false);
+
+  Array.from(imgList).forEach(el => {
+    el.addEventListener("click", function () {
+      window.ReactNativeWebView.postMessage(JSON.stringify({type: 'previewimg', data: this.src}));
+    });
+  });
 
   true; // note: this is required, or you'll sometimes get silent failures
 `;
@@ -32,6 +49,14 @@ const Detail = () => {
   const numRef = useRef(0);
 
   const [loadingState, setLoadingState] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [imgConf, setImgConf] = useState(() => {
+    return {
+      url: '',
+      width: 0,
+      height: 0,
+    };
+  });
 
   console.log('detailId==>', detailId);
 
@@ -44,56 +69,101 @@ const Detail = () => {
   };
 
   const handleOnWebViewMsg = e => {
-    // console.log('handleOnWebViewMsg==>', e);
-    numRef.current++;
+    console.log('handleOnWebViewMsg==>');
 
-    if (numRef.current > 1) {
+    if (!e || !e.nativeEvent) {
       return;
     }
 
-    if (e && e.nativeEvent && e.nativeEvent.data === 'goback') {
-      // navigate('/list', {
-      //   replace: true,
-      //   state: 'back',
-      // });
-      navigate(-1);
+    let data = JSON.parse(e.nativeEvent.data);
+
+    switch (data.type) {
+      case 'goback':
+        numRef.current++;
+        if (numRef.current > 1) {
+          return;
+        }
+        navigate(-1);
+        break;
+      case 'previewimg':
+        console.log('data.data==>', data.data);
+        Image.getSize(data.data, (...imgRes) => {
+          setImgConf({
+            width: imgRes[0],
+            height: imgRes[1],
+            url: data.data,
+          });
+
+          setModalVisible(true);
+        });
+        break;
+      default:
+        break;
     }
   };
 
   return (
-    <WebView
-      source={{uri: `http://1.15.42.2:3000/posts/${detailId || ''}`}}
-      containerStyle={[styles.container, {height: window.height}]}
-      injectedJavaScript={INJECTED_JAVASCRIPT}
-      startInLoadingState={loadingState}
-      renderLoading={() => (
-        <View style={styles.loading}>
-          <ActivityIndicator size="large" />
-        </View>
-      )}
-      renderError={() => (
-        <Result
-          style={[styles.loading, ...[{top: 0}]]}
-          message="加载失败"
-          img={<IconFill name="warning" size={100} color="#faad14" />}
-          buttonText="返回"
-          buttonType="primary"
-          onButtonClick={() => navigate(-1)}
+    <>
+      <WebView
+        source={{uri: `http://1.15.42.2:3000/posts/${detailId || ''}`}}
+        containerStyle={[styles.container, {height: window.height}]}
+        injectedJavaScript={INJECTED_JAVASCRIPT}
+        startInLoadingState={loadingState}
+        useWebView2={true}
+        renderLoading={() => (
+          <View style={styles.loading}>
+            <ActivityIndicator size="large" />
+          </View>
+        )}
+        renderError={() => (
+          <Result
+            style={[styles.loading, ...[{top: 0}]]}
+            message="加载失败"
+            img={<IconFill name="warning" size={100} color="#faad14" />}
+            buttonText="返回"
+            buttonType="primary"
+            onButtonClick={() => navigate(-1)}
+          />
+        )}
+        onError={handleOnError}
+        onLoad={handleOnLoad}
+        onMessage={handleOnWebViewMsg}
+        onLoadStart={() => {
+          console.log('onLoadStart');
+          // setLoadingState(true);
+        }}
+        onLoadEnd={() => {
+          console.log('onLoadEnd');
+          // setTimeout(() => setLoadingState(false), 5000);
+          setLoadingState(false);
+        }}
+        onHttpError={syntheticEvent => {
+          const {nativeEvent} = syntheticEvent;
+          console.warn(
+            'WebView received error status code: ',
+            nativeEvent.statusCode,
+          );
+        }}
+      />
+
+      <Modal
+        onRequestClose={() => {
+          setModalVisible(false);
+          return true;
+        }}
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}>
+        <ImageViewer
+          useNativeDriver={true}
+          enableSwipeDown={true}
+          imageUrls={[
+            {url: imgConf.url, width: imgConf.width, height: imgConf.height},
+          ]}
+          onCancel={() => setModalVisible(false)}
         />
-      )}
-      onError={handleOnError}
-      onLoad={handleOnLoad}
-      onMessage={handleOnWebViewMsg}
-      onLoadStart={() => {
-        console.log('onLoadStart');
-        // setLoadingState(true);
-      }}
-      onLoadEnd={() => {
-        console.log('onLoadEnd');
-        // setTimeout(() => setLoadingState(false), 5000);
-        setLoadingState(false);
-      }}
-    />
+      </Modal>
+    </>
   );
 };
 

@@ -18,10 +18,12 @@
   "dependencies": {
     "@ant-design/icons-react-native": "^2.3.2",
     "@ant-design/react-native": "^5.0.3",
+    "github-syntax-light": "^0.5.0",
     "react": "18.2.0",
     "react-native": "0.71.2",
     "react-native-asset": "^2.0.1",
     "react-native-config": "^1.5.0",
+    "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-webview": "^11.26.1",
     "react-router-native": "^6.8.0",
     "styled-components": "^5.3.6"
