@@ -20,6 +20,7 @@
 		C8D38DF20BAF4FF6ABCE7B0B /* test2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B499692087D4991BCD948EC /* test2.png */; };
 		CD8DFD3E7E6B44E086629852 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 026892065D754CD9A4991467 /* user.png */; };
 		9C07824A826D473EBE09CF9A /* mybg.png in Resources */ = {isa = PBXBuildFile; fileRef = 324AFA19230A4F56B0064B68 /* mybg.png */; };
+		7D5EC7CE0CB04282BAC8D8AE /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A7D05A1DD54100979FB93C /* location.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		8B499692087D4991BCD948EC /* test2.png */ = {isa = PBXFileReference; name = "test2.png"; path = "../src/assets/img/test2.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		026892065D754CD9A4991467 /* user.png */ = {isa = PBXFileReference; name = "user.png"; path = "../src/assets/img/user.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		324AFA19230A4F56B0064B68 /* mybg.png */ = {isa = PBXFileReference; name = "mybg.png"; path = "../src/assets/img/mybg.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		42A7D05A1DD54100979FB93C /* location.png */ = {isa = PBXFileReference; name = "location.png"; path = "../src/assets/img/location.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +172,7 @@
 				8B499692087D4991BCD948EC /* test2.png */,
 				026892065D754CD9A4991467 /* user.png */,
 				324AFA19230A4F56B0064B68 /* mybg.png */,
+				42A7D05A1DD54100979FB93C /* location.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				C8D38DF20BAF4FF6ABCE7B0B /* test2.png in Resources */,
 				CD8DFD3E7E6B44E086629852 /* user.png in Resources */,
 				9C07824A826D473EBE09CF9A /* mybg.png in Resources */,
+				7D5EC7CE0CB04282BAC8D8AE /* location.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

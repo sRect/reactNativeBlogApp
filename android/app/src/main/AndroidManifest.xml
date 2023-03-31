@@ -1,8 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <meta-data
+    android:name="com.amap.api.v2.apikey"
+    android:value="@string/AMP_ANDROID_API_KEY"/>
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <!-- 精确定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 模糊定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission tools:node="remove" android:required="${READ_PHONE_STATE}" android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission tools:node="remove" android:required="${WRITE_EXTERNAL_STORAGE}" android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission tools:node="remove" android:required="${READ_EXTERNAL_STORAGE}" android:name="android.permission.READ_EXTERNAL_STORAGE" />
