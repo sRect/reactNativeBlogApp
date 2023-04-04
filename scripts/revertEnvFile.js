@@ -6,9 +6,9 @@ const rootDir = process.cwd();
 const fsPromise = fs.promises;
 const chalk = require('chalk');
 
-console.log('argv:', argv); // [ '.env.development', '.env.amapkey' ]
+console.log('argv:', argv); // [ '.env.development', '.env.local' ]
 
-const envAmapKeyFilePath = path.resolve(rootDir, `./${argv[1]}`);
+const envLocalFilePath = path.resolve(rootDir, `./${argv[1]}`);
 const envFilePath = path.resolve(rootDir, `./${argv[0]}`);
 
 const handleWrite = async (filePath, data) => {
@@ -86,12 +86,12 @@ async function handleReadFile(fileName) {
   // );
 }
 
-// 检查本地根目录是否存在`.env.amapkey`文件
+// 检查本地根目录是否存在`.env.local`文件
 async function handleRevertEnvFile() {
   try {
-    await fsPromise.stat(envAmapKeyFilePath);
+    await fsPromise.stat(envLocalFilePath);
 
-    const envAmapFileContent = await handleReadFile(envAmapKeyFilePath);
+    const envAmapFileContent = await handleReadFile(envLocalFilePath);
     const envFileContent = await handleReadFile(envFilePath);
 
     if (envAmapFileContent === '') {

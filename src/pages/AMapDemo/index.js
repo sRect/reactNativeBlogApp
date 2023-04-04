@@ -175,11 +175,12 @@ const AMapDemo = () => {
         // destructiveButtonIndex: 5,
       },
       buttonIndex => {
-        console.log(buttonIndex);
-        let val = mapArr[buttonIndex].value;
+        if (buttonIndex < mapArr.length - 1) {
+          let val = mapArr[buttonIndex].value;
 
-        if (val !== mapType) {
-          setMapType(val);
+          if (val !== mapType) {
+            setMapType(val);
+          }
         }
       },
     );
@@ -402,7 +403,7 @@ const AMapDemo = () => {
                     height: 32,
                   }}
                 />
-                <MapMarkerText>{address}</MapMarkerText>
+                {address && <MapMarkerText>{address}</MapMarkerText>}
               </MapMarkerView>
             </Marker>
           )}

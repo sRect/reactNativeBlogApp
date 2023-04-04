@@ -7,10 +7,10 @@ const fsPromise = fs.promises;
 const chalk = require('chalk');
 // const shell = require('shelljs');
 
-console.log('argv:', argv); // [ '.env.development', '.env.amapkey' ]
+console.log('argv:', argv); // [ '.env.development', '.env.local' ]
 
-const envAmapKeyFilePath = path.resolve(rootDir, `./${argv[0]}`);
-const envAmapKeyFileTemplate = `
+const envLocalFilePath = path.resolve(rootDir, `./${argv[0]}`);
+const envLocalFileTemplate = `
 # 高德地图key
 # android
 AMP_ANDROID_API_KEY=请输入您的android api key
@@ -25,9 +25,9 @@ const handleWrite = async () => {
     // https://nodejs.org/docs/latest-v16.x/api/fs.html#fspromiseswritefilefile-data-options
     const controller = new AbortController();
     const {signal} = controller;
-    const data = new Uint8Array(Buffer.from(envAmapKeyFileTemplate));
+    const data = new Uint8Array(Buffer.from(envLocalFileTemplate));
 
-    const promise = await fsPromise.writeFile(envAmapKeyFilePath, data, {
+    const promise = await fsPromise.writeFile(envLocalFilePath, data, {
       signal,
       encoding: 'utf8',
       flags: 'w', // 以写入模式打开文件，如果文件不存在则创建
@@ -46,10 +46,10 @@ const handleWrite = async () => {
 
 async function writeEnvAmapKeyFile() {
   // https://nodejs.org/docs/latest-v16.x/api/fs.html#fsexistspath-callback
-  fs.open(envAmapKeyFilePath, 'wx', async (err, fd) => {
+  fs.open(envLocalFilePath, 'wx', async (err, fd) => {
     if (err) {
       if (err.code === 'EEXIST') {
-        console.log(`${envAmapKeyFilePath}文件已存在`);
+        console.log(`${envLocalFilePath}文件已存在`);
       }
       process.exit(1);
       return;
@@ -68,20 +68,20 @@ async function writeEnvAmapKeyFile() {
   });
 }
 
-// 检查本地根目录是否存在`.env.amapkey`文件
+// 检查本地根目录是否存在`.env.local`文件
 async function checkEnvAmapKeyFile() {
   try {
-    await fsPromise.stat(envAmapKeyFilePath);
-    console.log(`${chalk.green('项目根目录已存在 `.env.amapkey` 文件')};`);
+    await fsPromise.stat(envLocalFilePath);
+    console.log(`${chalk.green('项目根目录已存在 `.env.local` 文件')};`);
   } catch (error) {
     console.log(`
-      ${chalk.red.bgYellow('项目根目录不存在 `.env.amapkey` 文件，将进行创建')};
+      ${chalk.red.bgYellow('项目根目录不存在 `.env.local` 文件，将进行创建')};
       ${chalk.yellow(
-        '请在生成的`.env.amapkey`文件中填入高德地图API KEY，未申请的请前往高德地图 https://console.amap.com/dev/key/app 中申请创建，申请成功后，请复制key到 `.env.amapkey`文件相应位置，然后重新启动项目',
+        '请在生成的`.env.local`文件中填入高德地图API KEY，未申请的请前往高德地图 https://console.amap.com/dev/key/app 中申请创建，申请成功后，请复制key到 `.env.local`文件相应位置，然后重新启动项目',
       )}
     `);
 
-    // shell.exec('touch \\.env.amapkey');
+    // shell.exec('touch \\.env.local');
     await writeEnvAmapKeyFile();
   }
 }
