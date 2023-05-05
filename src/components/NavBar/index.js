@@ -36,12 +36,16 @@ const TitleText = styled.Text`
 `;
 
 const NavBar = props => {
-  const {title, children} = props;
+  const {title, children, handleBack = null} = props;
   const navigate = useNavigate();
+
+  const handleLeftPress = () => {
+    handleBack ? handleBack() : navigate(-1);
+  };
 
   return (
     <NavWrapper>
-      <BackBtn activeOpacity={0.8} onPress={() => navigate(-1)}>
+      <BackBtn activeOpacity={0.8} onPress={handleLeftPress}>
         <IconOutline name="left" color="#555" size={20} />
         <BackText selectable={false}>返回</BackText>
       </BackBtn>

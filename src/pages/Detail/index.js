@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {useParams, useNavigate} from 'react-router-native';
 import {WebView} from 'react-native-webview';
-import {Result} from '@ant-design/react-native';
+import {Result, ActionSheet} from '@ant-design/react-native';
 import {IconFill} from '@ant-design/icons-react-native';
 // import githubCss from 'github-syntax-light/lib/github-light.css';
 import ImageViewer from 'react-native-image-zoom-viewer';
@@ -20,6 +20,12 @@ const INJECTED_JAVASCRIPT = `
   var aEl = document.querySelectorAll("a");
   var code = document.querySelectorAll("pre");
   var imgList = document.querySelectorAll("img");
+  var navBarRight = document.querySelector(".adm-nav-bar-right");
+
+  navBarRight.innerText = "分享";
+  navBarRight.style.color = "#0969da";
+  navBarRight.style.fontSize = "16px";
+  navBarRight.style.fontFamily = "var(--adm-font-family)";
 
   [...aEl].forEach(el => {
     el.style.color="#0969da";
@@ -32,6 +38,10 @@ const INJECTED_JAVASCRIPT = `
   navBtn.addEventListener("click", () => {
     window.ReactNativeWebView.postMessage(JSON.stringify({type: "goback"}));
   }, false);
+
+  navBarRight.addEventListener("click", () => {
+    window.ReactNativeWebView.postMessage(JSON.stringify({type: "share"}));
+  });
 
   Array.from(imgList).forEach(el => {
     el.addEventListener("click", function () {
@@ -47,6 +57,8 @@ const Detail = () => {
   const navigate = useNavigate();
   const window = useWindowDimensions();
   const numRef = useRef(0);
+
+  const webviewUrl = `http://1.15.42.2:3000/posts/${detailId || ''}`;
 
   const [loadingState, setLoadingState] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
@@ -97,6 +109,13 @@ const Detail = () => {
           setModalVisible(true);
         });
         break;
+      case 'share':
+        ActionSheet.showShareActionSheetWithOptions({
+          message: webviewUrl,
+          title: '分享',
+        });
+        console.log('分享');
+        break;
       default:
         break;
     }
@@ -105,7 +124,7 @@ const Detail = () => {
   return (
     <>
       <WebView
-        source={{uri: `http://1.15.42.2:3000/posts/${detailId || ''}`}}
+        source={{uri: webviewUrl}}
         containerStyle={[styles.container, {height: window.height}]}
         injectedJavaScript={INJECTED_JAVASCRIPT}
         startInLoadingState={loadingState}
