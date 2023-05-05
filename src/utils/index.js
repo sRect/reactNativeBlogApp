@@ -1,5 +1,12 @@
-export function sleep(timeout) {
+import {NativeModules} from 'react-native';
+
+function sleep(timeout) {
   return new Promise(resolve => {
     setTimeout(resolve, timeout);
   });
 }
+
+// public String getName()中返回的字符串
+let FlashlightManager = NativeModules.FlashlightManager;
+
+export {sleep, FlashlightManager};

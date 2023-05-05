@@ -1,4 +1,4 @@
-import React, {memo, useRef} from 'react';
+import React, {memo, useRef, useEffect} from 'react';
 import {
   View,
   Image,
@@ -12,6 +12,9 @@ import {
   // TouchableHighlight,
   Text,
   AppState,
+  PermissionsAndroid,
+  // NativeEventEmitter,
+  // NativeModules,
 } from 'react-native';
 import {useNavigate} from 'react-router-native';
 import {
@@ -19,15 +22,20 @@ import {
   WhiteSpace,
   Toast,
   List,
-  // Button,
+  Button,
 } from '@ant-design/react-native';
 import Config from 'react-native-config';
+import * as WeChat from 'react-native-wechat-lib';
 import NavBar from '../../components/NavBar';
+import {FlashlightManager} from '../../utils';
+
+console.log('FlashlightManager', FlashlightManager);
 
 const About = () => {
   // const {height: windowHeight} = useWindowDimensions();
   const navigate = useNavigate();
   const appState = useRef(AppState.currentState);
+  const lightTypeRef = useRef(false);
 
   const openModal = () => {
     Alert.alert('只因太美', '只因与荔枝是兄弟吗', [
@@ -55,6 +63,103 @@ const About = () => {
       },
     ]);
   };
+
+  const handleOpenMinApp = async () => {
+    try {
+      const res = await WeChat.launchMiniProgram({
+        userName: 'gh_19f12501594e',
+        miniProgramType: 0,
+        // path: 'pages/index/index',
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // 申请摄像机权限
+  const handleAndroidPermissin = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: '闪光灯授权',
+          message: '获取闪光灯权限',
+          buttonNeutral: '跳过',
+          buttonNegative: '取消',
+          buttonPositive: '同意',
+        },
+      );
+
+      console.log('授权结果granted==>', granted);
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('可以打开闪光灯了');
+        return Promise.resolve();
+      } else if (granted === PermissionsAndroid.RESULTS.DENIED) {
+        Toast.fail({
+          content: '已拒绝打开闪光灯',
+        });
+        return Promise.reject();
+      } else {
+        Toast.fail({
+          content: '用户已拒绝，且不愿被再次询问',
+        });
+        return Promise.reject();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // 打开、关闭手电筒
+  const toggleLight = async () => {
+    try {
+      await handleAndroidPermissin();
+      const suportRes = await FlashlightManager.isSuportFlashlight();
+      console.log('当前手机是否支持闪光灯:', suportRes);
+      // await sleep(2000);
+      // const falshlightType = await FlashlightManager.getFlashlightType();
+      // console.log('当前手机闪光灯状态:', falshlightType);
+      console.log('准备打开/关闭手电筒:', lightTypeRef.current ? 0 : 1);
+      const res = await FlashlightManager.toggleLight(
+        lightTypeRef.current ? 0 : 1,
+      );
+
+      lightTypeRef.current = res;
+      console.log('手电筒打开/关闭结果:', res);
+    } catch (error) {
+      console.error('打开/关闭手电筒异常', error);
+    }
+  };
+
+  useEffect(() => {
+    (async function () {
+      try {
+        // 腾讯开放平台创建的移动应用必须要审核通过后，才能进行分享，支付等操作
+        const res = await WeChat.registerApp(
+          'wxed786df10438e24f',
+          'https//baidu.com',
+        );
+        console.log('registerApp==>', res);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  // useEffect(() => {
+  //   const eventEmitter = new NativeEventEmitter(
+  //     NativeModules.FlashlightManager,
+  //   );
+
+  //   const eventListener = eventEmitter.addListener('EventReminder', event => {
+  //     console.log('EventReminder', event); // "someValue"
+  //   });
+
+  //   return () => {
+  //     eventListener && eventListener.remove(); // 组件卸载时记得移除监听事件
+  //   };
+  // }, []);
 
   return (
     <>
@@ -98,11 +203,25 @@ const About = () => {
             <List.Item extra={Config.VERSION_NAME} arrow="empty">
               版本
             </List.Item>
+            <List.Item extra="" arrow="horizontal" onPress={handleOpenMinApp}>
+              打开微信小程序
+              <List.Item.Brief>
+                腾讯开放平台创建的移动应用必须审核通过，这里审核没通过，所以拉起小程序失败
+              </List.Item.Brief>
+            </List.Item>
             <List.Item
               extra=""
               arrow="horizontal"
               onPress={() => navigate('/amapDemo/31/121')}>
               高德地图
+            </List.Item>
+            <List.Item
+              extra={
+                <Button type="ghost" size="small" onPress={toggleLight}>
+                  打开/关闭
+                </Button>
+              }>
+              调用安卓原生打开手电筒
             </List.Item>
           </List>
         </View>
