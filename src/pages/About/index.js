@@ -27,9 +27,7 @@ import {
 import Config from 'react-native-config';
 import * as WeChat from 'react-native-wechat-lib';
 import NavBar from '../../components/NavBar';
-import {FlashlightManager} from '../../utils';
-
-console.log('FlashlightManager', FlashlightManager);
+import {FlashlightManager, MyNotificationManager} from '../../utils';
 
 const About = () => {
   // const {height: windowHeight} = useWindowDimensions();
@@ -132,6 +130,57 @@ const About = () => {
     }
   };
 
+  // 申请通知权限
+  const handleNotificationPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+        {
+          title: '通知授权',
+          message: '获取通知权限',
+          buttonNeutral: '跳过',
+          buttonNegative: '取消',
+          buttonPositive: '同意',
+        },
+      );
+
+      console.log('授权结果granted==>', granted);
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        return Promise.resolve();
+      } else if (granted === PermissionsAndroid.RESULTS.DENIED) {
+        Toast.fail({
+          content: '已拒绝通知权限',
+        });
+        return Promise.reject();
+      } else {
+        Toast.fail({
+          content: '用户已拒绝，且不愿被再次询问',
+        });
+        return Promise.reject();
+      }
+    } catch (error) {
+      console.error(error);
+      return Promise.reject();
+    }
+  };
+
+  const handleNotification = async () => {
+    try {
+      await handleNotificationPermission();
+
+      const ctxId = Math.ceil(Math.random() * 10000000);
+      MyNotificationManager.show(
+        ctxId, // android中PendingIntent.getActivity的id,每次调用必须唯一，否则可能拿到旧数据
+        '文章更新啦！', // 通知标题
+        '查看新文章', // 通知内容
+        'PageToJumpTo', // 需要调用android中哪个activity名称
+        '/list', // 点击通知时需要跳转的路径
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     (async function () {
       try {
@@ -222,6 +271,14 @@ const About = () => {
                 </Button>
               }>
               调用安卓原生打开手电筒
+            </List.Item>
+            <List.Item
+              extra={
+                <Button type="ghost" size="small" onPress={handleNotification}>
+                  点击
+                </Button>
+              }>
+              通知Notification
             </List.Item>
           </List>
         </View>

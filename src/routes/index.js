@@ -1,7 +1,7 @@
 import React, {lazy} from 'react';
 import {NativeRouter, Routes, Route} from 'react-router-native';
 import ResetBack from '../components/ResetBack';
-
+import PageJumpTo from '../components/PageJumpTo';
 import Home from '../pages/Home';
 
 const List = lazy(() => import('../pages/List'));
@@ -15,6 +15,7 @@ const AMapDemo = lazy(() => import('../pages/AMapDemo'));
 const RouterConfig = () => {
   return (
     <NativeRouter>
+      <PageJumpTo />
       <ResetBack />
       <Routes>
         <Route path="/" index element={<Home />} />

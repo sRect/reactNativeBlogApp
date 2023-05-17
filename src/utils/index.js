@@ -8,5 +8,6 @@ function sleep(timeout) {
 
 // public String getName()中返回的字符串
 let FlashlightManager = NativeModules.FlashlightManager;
+let MyNotificationManager = NativeModules.MyNotificationManager;
 
-export {sleep, FlashlightManager};
+export {sleep, FlashlightManager, MyNotificationManager};

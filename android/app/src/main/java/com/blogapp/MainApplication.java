@@ -11,7 +11,8 @@ import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
 import java.util.List;
 
-import com.blogapp.FlashlightManModulePackage; // 引入WeChatManagerModulePackage包
+import com.blogapp.FlashlightManModulePackage; // 引入自己的包
+import com.blogapp.MyNotificationModulePackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new RNCConfigPackage());
           // https://www.reactnative.cn/docs/native-modules-android#promises
           packages.add(new FlashlightManModulePackage()); // <-- 添加这一行，类名替换成你的Package类的名字 name.
+          packages.add(new MyNotificationModulePackage());
           return packages;
         }
 
