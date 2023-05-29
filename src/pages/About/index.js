@@ -1,6 +1,7 @@
 import React, {memo, useRef, useEffect, useState} from 'react';
 import {
   View,
+  ScrollView,
   Image,
   StyleSheet,
   Pressable,
@@ -314,92 +315,100 @@ const About = () => {
             </View>
           </TouchableHighlight> */}
 
-          <List style={styles.listWrap}>
-            <List.Item
-              extra=""
-              arrow="horizontal"
-              onPress={() => navigate('/animatedDemo/aniBase')}>
-              animated demo
-            </List.Item>
-            <List.Item wrap extra={appState.current} arrow="empty">
-              appState
-            </List.Item>
-            <List.Item wrap extra={Config.BASE_URL} arrow="empty">
-              BASE_URL
-            </List.Item>
-            <List.Item
-              extra={Config.NODE_ENV === 'development' ? 'debug' : 'release'}
-              arrow="empty">
-              环境
-            </List.Item>
-            <List.Item extra={Config.VERSION_NAME} arrow="empty">
-              版本
-            </List.Item>
-            <List.Item wrap extra={isHermes() ? 'true' : 'false'} arrow="empty">
-              Hermes引擎开启状态
-            </List.Item>
-            <List.Item
-              arrow="empty"
-              extra={
-                <View style={styles.backgroundTask}>
+          <ScrollView style={styles.scrollView}>
+            <List style={styles.listWrap}>
+              <List.Item
+                extra=""
+                arrow="horizontal"
+                onPress={() => navigate('/animatedDemo/aniBase')}>
+                animated demo
+              </List.Item>
+              <List.Item wrap extra={appState.current} arrow="empty">
+                appState
+              </List.Item>
+              <List.Item wrap extra={Config.BASE_URL} arrow="empty">
+                BASE_URL
+              </List.Item>
+              <List.Item
+                extra={Config.NODE_ENV === 'development' ? 'debug' : 'release'}
+                arrow="empty">
+                环境
+              </List.Item>
+              <List.Item extra={Config.VERSION_NAME} arrow="empty">
+                版本
+              </List.Item>
+              <List.Item
+                wrap
+                extra={isHermes() ? 'true' : 'false'}
+                arrow="empty">
+                Hermes引擎开启状态
+              </List.Item>
+              <List.Item
+                arrow="empty"
+                extra={
                   <View style={styles.backgroundTask}>
-                    <Button
-                      type="ghost"
-                      size="small"
-                      style={styles.backgroundTaskBtn}
-                      onPress={() => handleBackgroundPlayMusic('play')}>
-                      播放
-                    </Button>
-                    <Button
-                      type="ghost"
-                      size="small"
-                      style={styles.backgroundTaskBtn}
-                      disabled={headlessTaskId === ''}
-                      onPress={() => handleBackgroundPlayMusic('pause')}>
-                      暂停
-                    </Button>
-                    <Button
-                      type="ghost"
-                      size="small"
-                      style={styles.backgroundTaskBtn}
-                      disabled={headlessTaskId === ''}
-                      onPress={() => handleBackgroundPlayMusic('release')}>
-                      结束
-                    </Button>
+                    <View style={styles.backgroundTask}>
+                      <Button
+                        type="ghost"
+                        size="small"
+                        style={styles.backgroundTaskBtn}
+                        onPress={() => handleBackgroundPlayMusic('play')}>
+                        播放
+                      </Button>
+                      <Button
+                        type="ghost"
+                        size="small"
+                        style={styles.backgroundTaskBtn}
+                        disabled={headlessTaskId === ''}
+                        onPress={() => handleBackgroundPlayMusic('pause')}>
+                        暂停
+                      </Button>
+                      <Button
+                        type="ghost"
+                        size="small"
+                        style={styles.backgroundTaskBtn}
+                        disabled={headlessTaskId === ''}
+                        onPress={() => handleBackgroundPlayMusic('release')}>
+                        结束
+                      </Button>
+                    </View>
                   </View>
-                </View>
-              }>
-              后台播放音乐
-            </List.Item>
-            <List.Item extra="" arrow="horizontal" onPress={handleOpenMinApp}>
-              打开微信小程序
-              <List.Item.Brief>
-                腾讯开放平台创建的移动应用必须审核通过，这里审核没通过，所以拉起小程序失败
-              </List.Item.Brief>
-            </List.Item>
-            <List.Item
-              extra=""
-              arrow="horizontal"
-              onPress={() => navigate('/amapDemo/31/121')}>
-              高德地图
-            </List.Item>
-            <List.Item
-              extra={
-                <Button type="ghost" size="small" onPress={toggleLight}>
-                  打开/关闭
-                </Button>
-              }>
-              调用安卓原生打开手电筒
-            </List.Item>
-            <List.Item
-              extra={
-                <Button type="ghost" size="small" onPress={handleNotification}>
-                  点击
-                </Button>
-              }>
-              通知Notification
-            </List.Item>
-          </List>
+                }>
+                后台播放音乐
+              </List.Item>
+              <List.Item extra="" arrow="horizontal" onPress={handleOpenMinApp}>
+                打开微信小程序
+                <List.Item.Brief>
+                  腾讯开放平台创建的移动应用必须审核通过，这里审核没通过，所以拉起小程序失败
+                </List.Item.Brief>
+              </List.Item>
+              <List.Item
+                extra=""
+                arrow="horizontal"
+                onPress={() => navigate('/amapDemo/31/121')}>
+                高德地图
+              </List.Item>
+              <List.Item
+                extra={
+                  <Button type="ghost" size="small" onPress={toggleLight}>
+                    打开/关闭
+                  </Button>
+                }>
+                调用安卓原生打开手电筒
+              </List.Item>
+              <List.Item
+                extra={
+                  <Button
+                    type="ghost"
+                    size="small"
+                    onPress={handleNotification}>
+                    点击
+                  </Button>
+                }>
+                通知Notification
+              </List.Item>
+            </List>
+          </ScrollView>
         </View>
       </WingBlank>
     </>
@@ -417,11 +426,13 @@ const styles = StyleSheet.create({
     fontFamily: '',
     color: '#ffffff',
   },
-  listWrap: {
+  scrollView: {
     width: '100%',
-    // flex: 1,
+    height: 450,
+  },
+  listWrap: {
     height: '100%',
-    overflow: 'scroll',
+    width: '100%',
   },
   location: {
     fontFamily: '',
