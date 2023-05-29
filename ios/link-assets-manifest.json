@@ -22,6 +22,14 @@
       "sha1": "0b285c3ad48448b67f30a49aae0eca98e36f86cc"
     },
     {
+      "path": "src/assets/mp3/ikun.mp3",
+      "sha1": "ca05dbc4d0f4156e2447e7464a1b533fac53eb04"
+    },
+    {
+      "path": "src/assets/mp3/test.mp3",
+      "sha1": "e204be524bec88e3037a1137fb1cd8597e3c4035"
+    },
+    {
       "path": "node_modules/@ant-design/icons-react-native/fonts/antfill.ttf",
       "sha1": "56960e7721fc92b62e0f7c4d131ffe34ed042c49"
     },

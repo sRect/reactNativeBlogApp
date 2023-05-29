@@ -47,6 +47,12 @@ function Home() {
     ).start();
   }, [scale]);
 
+  useEffect(() => {
+    const isHermes = () => !!global.HermesInternal;
+
+    console.log('isHermes:', isHermes());
+  }, []);
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.wrapper}>

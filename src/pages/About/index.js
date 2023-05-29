@@ -1,4 +1,4 @@
-import React, {memo, useRef, useEffect} from 'react';
+import React, {memo, useRef, useEffect, useState} from 'react';
 import {
   View,
   Image,
@@ -13,8 +13,9 @@ import {
   Text,
   AppState,
   PermissionsAndroid,
-  // NativeEventEmitter,
-  // NativeModules,
+  NativeEventEmitter,
+  NativeModules,
+  AppRegistry,
 } from 'react-native';
 import {useNavigate} from 'react-router-native';
 import {
@@ -34,6 +35,10 @@ const About = () => {
   const navigate = useNavigate();
   const appState = useRef(AppState.currentState);
   const lightTypeRef = useRef(false);
+  const [headlessTaskId, setHeadlessTaskId] = useState('');
+
+  const isHermes = () => !!global.HermesInternal;
+  const PlayMusicManager = NativeModules.PlayMusicManager;
 
   const openModal = () => {
     Alert.alert('只因太美', '只因与荔枝是兄弟吗', [
@@ -181,6 +186,80 @@ const About = () => {
     }
   };
 
+  // 申请读取文件权限
+  // const handlePlayMusicPermission = async () => {
+  //   try {
+  //     const granted = await PermissionsAndroid.request(
+  //       PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+  //       {
+  //         title: '读写文件授权',
+  //         message: '获取读写文件权限',
+  //         buttonNeutral: '跳过',
+  //         buttonNegative: '取消',
+  //         buttonPositive: '同意',
+  //       },
+  //     );
+
+  //     console.log('授权结果granted==>', granted);
+  //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  //       return Promise.resolve();
+  //     } else if (granted === PermissionsAndroid.RESULTS.DENIED) {
+  //       Toast.fail({
+  //         content: '已拒绝通知权限',
+  //       });
+  //       return Promise.reject();
+  //     } else {
+  //       Toast.fail({
+  //         content: '用户已拒绝，且不愿被再次询问',
+  //       });
+  //       return Promise.reject();
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     return Promise.reject();
+  //   }
+  // };
+
+  // 在后台播放音乐
+  const handleBackgroundPlayMusic = async type => {
+    try {
+      const taskId = Math.ceil(Math.random() * 10000000);
+      const taskKey = 'backgroundPlayMusic';
+      let mp3FileName = 'amaji';
+
+      if (type === 'play') {
+        // await handlePlayMusicPermission();
+        if (!headlessTaskId) {
+          console.log('开始后台任务', taskId, type);
+          AppRegistry.startHeadlessTask(taskId, taskKey, {
+            taskId,
+            taskKey,
+            payload: {
+              mp3FileName,
+              playerStatus: 'play',
+              taskId,
+            },
+          });
+          setHeadlessTaskId(taskId);
+        } else {
+          console.log('继续播放');
+          await PlayMusicManager.control(mp3FileName, 'play');
+        }
+      } else {
+        if (type === 'pause') {
+          await PlayMusicManager.control(mp3FileName, 'pause');
+        } else {
+          await PlayMusicManager.control(mp3FileName, 'release');
+          console.log('结束后台任务', headlessTaskId);
+          AppRegistry.cancelHeadlessTask(headlessTaskId, taskKey);
+          setHeadlessTaskId('');
+        }
+      }
+    } catch (error) {
+      console.error('backgroundPlayMusicTask error', error);
+    }
+  };
+
   useEffect(() => {
     (async function () {
       try {
@@ -196,19 +275,23 @@ const About = () => {
     })();
   }, []);
 
-  // useEffect(() => {
-  //   const eventEmitter = new NativeEventEmitter(
-  //     NativeModules.FlashlightManager,
-  //   );
+  useEffect(() => {
+    // 监听后台任务音乐播放结束
+    const eventEmitter = new NativeEventEmitter(NativeModules.PlayMusicManager);
 
-  //   const eventListener = eventEmitter.addListener('EventReminder', event => {
-  //     console.log('EventReminder', event); // "someValue"
-  //   });
+    const eventListener = eventEmitter.addListener(
+      'backgroundMusicPlayEnd',
+      event => {
+        console.log('backgroundMusicPlayEnd:', event); // "someValue"
 
-  //   return () => {
-  //     eventListener && eventListener.remove(); // 组件卸载时记得移除监听事件
-  //   };
-  // }, []);
+        setHeadlessTaskId('');
+      },
+    );
+
+    return () => {
+      eventListener && eventListener.remove(); // 组件卸载时记得移除监听事件
+    };
+  }, []);
 
   return (
     <>
@@ -251,6 +334,42 @@ const About = () => {
             </List.Item>
             <List.Item extra={Config.VERSION_NAME} arrow="empty">
               版本
+            </List.Item>
+            <List.Item wrap extra={isHermes() ? 'true' : 'false'} arrow="empty">
+              Hermes引擎开启状态
+            </List.Item>
+            <List.Item
+              arrow="empty"
+              extra={
+                <View style={styles.backgroundTask}>
+                  <View style={styles.backgroundTask}>
+                    <Button
+                      type="ghost"
+                      size="small"
+                      style={styles.backgroundTaskBtn}
+                      onPress={() => handleBackgroundPlayMusic('play')}>
+                      播放
+                    </Button>
+                    <Button
+                      type="ghost"
+                      size="small"
+                      style={styles.backgroundTaskBtn}
+                      disabled={headlessTaskId === ''}
+                      onPress={() => handleBackgroundPlayMusic('pause')}>
+                      暂停
+                    </Button>
+                    <Button
+                      type="ghost"
+                      size="small"
+                      style={styles.backgroundTaskBtn}
+                      disabled={headlessTaskId === ''}
+                      onPress={() => handleBackgroundPlayMusic('release')}>
+                      结束
+                    </Button>
+                  </View>
+                </View>
+              }>
+              后台播放音乐
             </List.Item>
             <List.Item extra="" arrow="horizontal" onPress={handleOpenMinApp}>
               打开微信小程序
@@ -300,9 +419,21 @@ const styles = StyleSheet.create({
   },
   listWrap: {
     width: '100%',
+    // flex: 1,
+    height: '100%',
+    overflow: 'scroll',
   },
   location: {
     fontFamily: '',
+  },
+  backgroundTask: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  backgroundTaskBtn: {
+    width: 50,
+    marginRight: 2,
   },
 });
 

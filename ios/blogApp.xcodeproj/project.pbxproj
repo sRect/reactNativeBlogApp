@@ -21,6 +21,8 @@
 		CD8DFD3E7E6B44E086629852 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 026892065D754CD9A4991467 /* user.png */; };
 		9C07824A826D473EBE09CF9A /* mybg.png in Resources */ = {isa = PBXBuildFile; fileRef = 324AFA19230A4F56B0064B68 /* mybg.png */; };
 		7D5EC7CE0CB04282BAC8D8AE /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A7D05A1DD54100979FB93C /* location.png */; };
+		965290FC730C4CD38DFB0F59 /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0DF39499788A4B84BCACD0F2 /* test.mp3 */; };
+		2039DBEA849848009AE99FA2 /* ikun.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D13B406CEF7042F1B4138253 /* ikun.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,8 @@
 		026892065D754CD9A4991467 /* user.png */ = {isa = PBXFileReference; name = "user.png"; path = "../src/assets/img/user.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		324AFA19230A4F56B0064B68 /* mybg.png */ = {isa = PBXFileReference; name = "mybg.png"; path = "../src/assets/img/mybg.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		42A7D05A1DD54100979FB93C /* location.png */ = {isa = PBXFileReference; name = "location.png"; path = "../src/assets/img/location.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0DF39499788A4B84BCACD0F2 /* test.mp3 */ = {isa = PBXFileReference; name = "test.mp3"; path = "../src/assets/mp3/test.mp3"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D13B406CEF7042F1B4138253 /* ikun.mp3 */ = {isa = PBXFileReference; name = "ikun.mp3"; path = "../src/assets/mp3/ikun.mp3"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +177,8 @@
 				026892065D754CD9A4991467 /* user.png */,
 				324AFA19230A4F56B0064B68 /* mybg.png */,
 				42A7D05A1DD54100979FB93C /* location.png */,
+				0DF39499788A4B84BCACD0F2 /* test.mp3 */,
+				D13B406CEF7042F1B4138253 /* ikun.mp3 */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -281,6 +287,8 @@
 				CD8DFD3E7E6B44E086629852 /* user.png in Resources */,
 				9C07824A826D473EBE09CF9A /* mybg.png in Resources */,
 				7D5EC7CE0CB04282BAC8D8AE /* location.png in Resources */,
+				965290FC730C4CD38DFB0F59 /* test.mp3 in Resources */,
+				2039DBEA849848009AE99FA2 /* ikun.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
