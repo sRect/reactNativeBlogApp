@@ -407,6 +407,12 @@ const About = () => {
                 }>
                 通知Notification
               </List.Item>
+              <List.Item
+                extra=""
+                arrow="horizontal"
+                onPress={() => navigate('/deepLinks')}>
+                Deep Links
+              </List.Item>
             </List>
           </ScrollView>
         </View>

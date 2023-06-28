@@ -8032,6 +8032,11 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
+uri-scheme@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmmirror.com/uri-scheme/-/uri-scheme-1.1.0.tgz#505e8ff199207b4c195009564158f939932f3c14"
+  integrity sha512-Psup0SqWmpf2TDohyMVa9UwhmHGXCvn1/+5jkSKy9BwUq3grRmBCmhpClViiWSkqjyNfJmcbZH68RFYqE2hmbQ==
+
 urix@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmmirror.com/urix/-/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
