@@ -1,4 +1,5 @@
 import {NativeModules} from 'react-native';
+import {backgroundPosition} from './backgroundPosition';
 
 // public String getName()中返回的字符串
 let FlashlightManager = NativeModules.FlashlightManager;
@@ -38,4 +39,5 @@ export {
   FlashlightManager,
   MyNotificationManager,
   PlayMusicManager,
+  backgroundPosition,
 };

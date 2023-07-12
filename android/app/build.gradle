@@ -209,6 +209,12 @@ dependencies {
     implementation project(':react-native-config')
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
+    // For Java
+    // https://github.com/react-native-maps/react-native-maps/issues/4083
+    implementation("androidx.work:work-runtime:2.7.1")
+    // // For Kotlin
+    // implementation 'androidx.work:work-runtime-ktx:2.6.0'
+    // implementation 'androidx.annotation:annotation:+'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {

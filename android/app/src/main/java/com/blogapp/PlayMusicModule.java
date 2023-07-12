@@ -100,8 +100,10 @@ public class PlayMusicModule extends ReactContextBaseJavaModule {
         } else if(playOrPauseType.equals(AUDIO_STOP)) {
           mediaPlayer.stop(); // 停止
         } else {
-          mediaPlayer.release(); // 释放资源
-          mediaPlayer = null;
+          if(mediaPlayer != null) {
+            mediaPlayer.release(); // 释放资源
+            mediaPlayer = null;
+          }
         }
 
         WritableMap params2 = Arguments.createMap();
