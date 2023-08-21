@@ -58,7 +58,11 @@
           <action android:name="android.intent.action.VIEW" />
           <category android:name="android.intent.category.DEFAULT" />
           <category android:name="android.intent.category.BROWSABLE" />
-          <data android:scheme="https" android:host="192.168.1.117"/>
+          <data android:scheme="https" 
+            android:host="192.168.1.117"
+            android:pathPrefix="/detail" />
+            <!-- 注意：“/”在pathPrefix中是必须的 -->
+          <data  />
         </intent-filter>
       </activity>
       <!-- <activity 
