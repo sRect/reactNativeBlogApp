@@ -17,7 +17,7 @@ const DeepLinksListener = () => {
         'https://192.168.1.117:80/',
       ];
 
-      if (url.startsWith(schemas[0]) || url.startsWith(schemas[1])) {
+      if (schemas.some(s => url.startsWith(s))) {
         let newUrl = url
           .replace(schemas[0], '')
           .replace(schemas[1], '')
