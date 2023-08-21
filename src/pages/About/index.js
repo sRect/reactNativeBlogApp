@@ -8,7 +8,7 @@ import {
   // useWindowDimensions,
   Alert,
   Vibration,
-  // Platform,
+  Platform,
   // ToastAndroid,
   // TouchableHighlight,
   Text,
@@ -26,6 +26,7 @@ import {
   List,
   Button,
 } from '@ant-design/react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Config from 'react-native-config';
 import * as WeChat from 'react-native-wechat-lib';
 import NavBar from '../../components/NavBar';
@@ -37,9 +38,11 @@ const About = () => {
   const appState = useRef(AppState.currentState);
   const lightTypeRef = useRef(false);
   const [headlessTaskId, setHeadlessTaskId] = useState('');
+  const [locationList, setLocationList] = useState([]);
 
   const isHermes = () => !!global.HermesInternal;
   const PlayMusicManager = NativeModules.PlayMusicManager;
+  const BackgroundPosition = NativeModules.BackgroundPosition;
 
   const openModal = () => {
     Alert.alert('只因太美', '只因与荔枝是兄弟吗', [
@@ -115,6 +118,51 @@ const About = () => {
     }
   };
 
+  // 申请定位权限
+  const handleAndroidPositionPermission = async () => {
+    try {
+      // https://juejin.cn/post/7058265721540706311
+      // android 11及以上版本申请权限时系统对话框不存在始终允许的选项，并且只能够在系统设置页面打开后台权限。
+      // 如果同时申请这三个权限时不会弹窗，系统会忽略权限请求，不会授予其中的任一权限。
+      // 在android 11级以上版本需要先申请ACCESS_COARSE_LOCATIO和ACCESS_FINE_LOCATION后
+      // 再申请ACCESS_BACKGROUND_LOCATION权限，才能确保前台访问位置权限和后台访问位置权限正常。
+      const granted1 = await PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+        // PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+      ]);
+
+      const granted2 = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+      );
+
+      console.log('granted1==>', granted1);
+      console.log('granted2==>', granted2);
+
+      if (
+        granted1['android.permission.ACCESS_FINE_LOCATION'] ===
+          PermissionsAndroid.RESULTS.GRANTED &&
+        granted1['android.permission.ACCESS_COARSE_LOCATION'] ===
+          PermissionsAndroid.RESULTS.GRANTED &&
+        granted2 === PermissionsAndroid.RESULTS.GRANTED
+      ) {
+        console.log('可以定位了');
+        return Promise.resolve();
+      } else {
+        console.log('拒绝获取定位权限');
+        Toast.fail({
+          content: <Text style={styles.ikun}>拒绝获取定位权限</Text>,
+          duration: 2,
+          stackable: true,
+        });
+        return Promise.reject({msg: '拒绝获取定位权限'});
+      }
+    } catch (error) {
+      console.warn(error);
+      return Promise.reject();
+    }
+  };
+
   // 打开、关闭手电筒
   const toggleLight = async () => {
     try {
@@ -138,6 +186,11 @@ const About = () => {
 
   // 申请通知权限
   const handleNotificationPermission = async () => {
+    console.log('Platform.Version', Platform.Version);
+    if (Platform.Version < 33 && Platform.OS === 'android') {
+      return Promise.resolve();
+    }
+
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
@@ -261,6 +314,22 @@ const About = () => {
     }
   };
 
+  // Headless JS后台任务
+  const handleBackgroundTask = async type => {
+    try {
+      if (type === 'start') {
+        await handleAndroidPositionPermission();
+        // const taskId = Math.ceil(Math.random() * 10000000);
+        // AppRegistry.startHeadlessTask(taskId, 'BackgroundTask');
+        await BackgroundPosition.startBackgroudTask();
+      } else {
+        await BackgroundPosition.stopBackgroudTask();
+      }
+    } catch (error) {
+      console.error('handleBackgroundTask error', error);
+    }
+  };
+
   useEffect(() => {
     (async function () {
       try {
@@ -279,32 +348,74 @@ const About = () => {
   useEffect(() => {
     // 监听后台任务音乐播放结束
     const eventEmitter = new NativeEventEmitter(NativeModules.PlayMusicManager);
+    const eventEmitter2 = new NativeEventEmitter(
+      NativeModules.TestModuleManager,
+    );
 
     const eventListener = eventEmitter.addListener(
       'backgroundMusicPlayEnd',
       event => {
         console.log('backgroundMusicPlayEnd:', event); // "someValue"
-
         setHeadlessTaskId('');
+      },
+    );
+
+    const eventListener2 = eventEmitter2.addListener(
+      'backgroundTask',
+      async event => {
+        console.log('backgroundTask:', event);
+        // const taskId = Math.ceil(Math.random() * 10000000);
+        // AppRegistry.startHeadlessTask(taskId, 'backgroundTask');
       },
     );
 
     return () => {
       eventListener && eventListener.remove(); // 组件卸载时记得移除监听事件
+      eventListener2 && eventListener2.remove();
     };
   }, []);
+
+  useEffect(() => {
+    console.log('about appState', appState);
+    (async function () {
+      if (appState.current === 'active') {
+        let locationListStr = await AsyncStorage.getItem('location');
+        console.log('locationListStr', locationListStr);
+        if (locationListStr) {
+          let obj = JSON.parse(locationListStr);
+
+          setLocationList(obj.list);
+        }
+      }
+    })();
+  }, [appState]);
 
   return (
     <>
       <NavBar title="关于我" />
       <WingBlank size="md">
-        <View style={styles.wrapper}>
-          <Pressable onPress={openModal}>
-            <Image
-              source={require('../../assets/img/test2.png')}
-              resizeMode="contain"
-            />
-          </Pressable>
+        <View>
+          {locationList.length === 0 ? (
+            <Pressable onPress={openModal} style={styles.center}>
+              <Image
+                source={require('../../assets/img/test2.png')}
+                resizeMode="contain"
+              />
+            </Pressable>
+          ) : (
+            <ScrollView style={styles.locationScrollView}>
+              <List style={styles.listWrap}>
+                {locationList.map((item, key) => (
+                  <List.Item wrap extra="" arrow="empty" key={key}>
+                    {`latitude:${item.latitude}, longitude:${
+                      item.longitude
+                    }, date: ${item.date || ''}`}
+                  </List.Item>
+                ))}
+              </List>
+            </ScrollView>
+          )}
+
           <WhiteSpace />
 
           {/* <TouchableHighlight
@@ -376,6 +487,31 @@ const About = () => {
                 }>
                 后台播放音乐
               </List.Item>
+              <List.Item
+                arrow="empty"
+                extra={
+                  <View style={styles.backgroundTask}>
+                    <View style={styles.backgroundTask}>
+                      <Button
+                        type="ghost"
+                        size="small"
+                        style={styles.backgroundTaskBtn}
+                        onPress={() => handleBackgroundTask('start')}>
+                        开始
+                      </Button>
+                      <Button
+                        type="ghost"
+                        size="small"
+                        style={styles.backgroundTaskBtn}
+                        onPress={() => handleBackgroundTask('stop')}>
+                        结束
+                      </Button>
+                    </View>
+                  </View>
+                }>
+                Headless JS后台任务
+                <List.Item.Brief>后台GPS持续获取定位</List.Item.Brief>
+              </List.Item>
               <List.Item extra="" arrow="horizontal" onPress={handleOpenMinApp}>
                 打开微信小程序
                 <List.Item.Brief>
@@ -432,9 +568,18 @@ const styles = StyleSheet.create({
     fontFamily: '',
     color: '#ffffff',
   },
+  center: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   scrollView: {
     width: '100%',
     height: 450,
+  },
+  locationScrollView: {
+    width: '100%',
+    height: 200,
   },
   listWrap: {
     height: '100%',

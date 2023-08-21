@@ -14,6 +14,7 @@ import java.util.List;
 import com.blogapp.FlashlightManModulePackage; // 引入自己的包
 import com.blogapp.MyNotificationModulePackage;
 import com.blogapp.PlayMusicModulePackage;
+import com.blogapp.BackgroundPositionPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -35,6 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
           packages.add(new FlashlightManModulePackage()); // <-- 添加这一行，类名替换成你的Package类的名字 name.
           packages.add(new MyNotificationModulePackage());
           packages.add(new PlayMusicModulePackage());
+          packages.add(new BackgroundPositionPackage());
           return packages;
         }
 
