@@ -91,10 +91,10 @@ def reactNativeArchitectures() {
 }
 
 // AndroidManifest.xml uses-permission 权限
-def READ_PHONE_STATE_ENV = project.env.get("READ_PHONE_STATE_ENV").toInteger() == 1 ? "true" : "false"
-def WRITE_EXTERNAL_STORAGE_ENV = project.env.get("WRITE_EXTERNAL_STORAGE_ENV").toInteger() == 1 ? "true" : "false"
-def READ_EXTERNAL_STORAGE_ENV = project.env.get("READ_EXTERNAL_STORAGE_ENV").toInteger() == 1 ? "true" : "false"
-def CHECK_LICENSE_ENV = project.env.get("CHECK_LICENSE_ENV").toInteger() == 1 ? "true" : "false"
+// def READ_PHONE_STATE_ENV = project.env.get("READ_PHONE_STATE_ENV").toInteger() == 1 ? "true" : "false"
+// def WRITE_EXTERNAL_STORAGE_ENV = project.env.get("WRITE_EXTERNAL_STORAGE_ENV").toInteger() == 1 ? "true" : "false"
+// def READ_EXTERNAL_STORAGE_ENV = project.env.get("READ_EXTERNAL_STORAGE_ENV").toInteger() == 1 ? "true" : "false"
+// def CHECK_LICENSE_ENV = project.env.get("CHECK_LICENSE_ENV").toInteger() == 1 ? "true" : "false"
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -128,10 +128,10 @@ android {
         // checkLicense project.env.get("CHECK_LICENSE").toInteger()
     }
 
-    println("READ_PHONE_STATE_ENV==>${READ_PHONE_STATE_ENV}")
-    println("WRITE_EXTERNAL_STORAGE_ENV==>${WRITE_EXTERNAL_STORAGE_ENV}")
-    println("READ_EXTERNAL_STORAGE_ENV==>${READ_EXTERNAL_STORAGE_ENV}")
-    println("CHECK_LICENSE_ENV==>${CHECK_LICENSE_ENV}")
+    // println("READ_PHONE_STATE_ENV==>${READ_PHONE_STATE_ENV}")
+    // println("WRITE_EXTERNAL_STORAGE_ENV==>${WRITE_EXTERNAL_STORAGE_ENV}")
+    // println("READ_EXTERNAL_STORAGE_ENV==>${READ_EXTERNAL_STORAGE_ENV}")
+    // println("CHECK_LICENSE_ENV==>${CHECK_LICENSE_ENV}")
 
     splits {
         abi {
@@ -161,12 +161,12 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
-            manifestPlaceholders = [
-              READ_PHONE_STATE: READ_PHONE_STATE_ENV, 
-              WRITE_EXTERNAL_STORAGE: WRITE_EXTERNAL_STORAGE_ENV,
-              READ_EXTERNAL_STORAGE: READ_EXTERNAL_STORAGE_ENV,
-              CHECK_LICENSE: CHECK_LICENSE_ENV
-            ]
+            // manifestPlaceholders = [
+            //   READ_PHONE_STATE: READ_PHONE_STATE_ENV, 
+            //   WRITE_EXTERNAL_STORAGE: WRITE_EXTERNAL_STORAGE_ENV,
+            //   READ_EXTERNAL_STORAGE: READ_EXTERNAL_STORAGE_ENV,
+            //   CHECK_LICENSE: CHECK_LICENSE_ENV
+            // ]
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -175,12 +175,12 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            manifestPlaceholders = [
-              READ_PHONE_STATE: READ_PHONE_STATE_ENV,
-              WRITE_EXTERNAL_STORAGE: WRITE_EXTERNAL_STORAGE_ENV,
-              READ_EXTERNAL_STORAGE: READ_EXTERNAL_STORAGE_ENV,
-              CHECK_LICENSE: CHECK_LICENSE_ENV
-            ]
+            // manifestPlaceholders = [
+            //   READ_PHONE_STATE: READ_PHONE_STATE_ENV,
+            //   WRITE_EXTERNAL_STORAGE: WRITE_EXTERNAL_STORAGE_ENV,
+            //   READ_EXTERNAL_STORAGE: READ_EXTERNAL_STORAGE_ENV,
+            //   CHECK_LICENSE: CHECK_LICENSE_ENV
+            // ]
             // resValue "string", "build_config_package", "com.blogapp"
         }
     }

@@ -13,8 +13,8 @@ const DeepLinksListener = () => {
       const url = data.url;
       const schemas = [
         'blogapp://',
-        'https://localhost:80/',
-        'https://192.168.1.117:80/',
+        'https://localhost/',
+        'https://my.applink.com/',
       ];
 
       if (schemas.some(s => url.startsWith(s))) {
@@ -31,6 +31,17 @@ const DeepLinksListener = () => {
     //   Linking.removeEventListener('url', cb);
     // };
   }, [navigate]);
+
+  // useEffect(() => {
+  //   (async function () {
+  //     try {
+  //       const res = await NativeModules.TrustIkunCrt.readIkunCrt();
+  //       console.log('readIkunCrt res:', res);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   })();
+  // });
 
   return <Fragment />;
 };

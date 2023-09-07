@@ -2,7 +2,7 @@ import React, {lazy} from 'react';
 import {NativeRouter, Routes, Route} from 'react-router-native';
 import ResetBack from '../components/ResetBack';
 import PageJumpTo from '../components/PageJumpTo';
-// import DeepLinksListener from '../components/DeepLinksListener';
+import DeepLinksListener from '../components/DeepLinksListener';
 import Home from '../pages/Home';
 
 const List = lazy(() => import('../pages/List'));
@@ -19,7 +19,7 @@ const RouterConfig = () => {
     <NativeRouter>
       <PageJumpTo />
       <ResetBack />
-      {/* <DeepLinksListener /> */}
+      <DeepLinksListener />
       <Routes>
         <Route path="/" index element={<Home />} />
         <Route path="/list" element={<List />} />

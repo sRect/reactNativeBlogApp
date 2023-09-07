@@ -9,7 +9,6 @@ import {
 import {Provider, Button} from '@ant-design/react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import RouterConfig from './src/routes';
-import DeepLinksListener from './src/components/DeepLinksListener';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -23,7 +22,6 @@ const App = () => {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <DeepLinksListener />
       {Platform.OS === 'android' ? (
         <View>
           <Suspense fallback={<Button loading>loading button</Button>}>

@@ -1,4 +1,4 @@
-import React, {Fragment, memo, useCallback, useState, useEffect} from 'react';
+import React, {Fragment, memo, useCallback, useState} from 'react';
 import {Linking, Alert, Platform, View, StyleSheet} from 'react-native';
 import {WingBlank, List, Button} from '@ant-design/react-native';
 import NavBar from '../../components/NavBar';
@@ -47,14 +47,22 @@ const DeepLinks = () => {
   };
 
   const handleOpenUrl = async linkUrl => {
-    const supported = await Linking.canOpenURL(linkUrl);
-
-    if (supported) {
-      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-      // by some browser in the mobile
+    try {
+      // const supported = await Linking.canOpenURL(linkUrl);
+      // console.log('supported', supported);
+      // if (supported) {
+      //   // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+      //   // by some browser in the mobile
+      //   await Linking.openURL(linkUrl);
+      // } else {
+      //   Alert.alert('提示', `无法打开${linkUrl}`, [{text: '确定'}]);
+      // }
       await Linking.openURL(linkUrl);
-    } else {
-      Alert.alert('提示', `无法打开${linkUrl}`, [{text: '确定'}]);
+    } catch (error) {
+      console.error(error);
+      Alert.alert('提示', `无法打开${linkUrl},${error.message}`, [
+        {text: '确定'},
+      ]);
     }
   };
 
@@ -96,6 +104,14 @@ const DeepLinks = () => {
             arrow="horizontal"
             onPress={() => handleOpenUrl('slack://open?team=123456')}>
             打开slack app
+          </Item>
+          <Item arrow="horizontal" onPress={() => handleOpenUrl('weixin://')}>
+            打开微信
+          </Item>
+          <Item
+            arrow="horizontal"
+            onPress={() => handleOpenUrl('mydeeplink://')}>
+            打开测试 app
           </Item>
           <Item
             extra={

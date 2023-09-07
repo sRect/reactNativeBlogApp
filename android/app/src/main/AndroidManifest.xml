@@ -3,6 +3,8 @@
     android:name="com.amap.api.v2.apikey"
     android:value="@string/AMP_ANDROID_API_KEY"/>
 
+    <meta-data android:name="asset_statements" android:resource="@string/asset_statements" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE"/>
     <!-- 精确定位 -->
@@ -18,11 +20,27 @@
     <!-- 安卓13及以上通知权限 -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     
-    <uses-permission tools:node="remove" android:required="${READ_PHONE_STATE}" android:name="android.permission.READ_PHONE_STATE" />
+    <!-- <uses-permission tools:node="remove" android:required="${READ_PHONE_STATE}" android:name="android.permission.READ_PHONE_STATE" /> -->
     <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
     <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
-    <uses-permission tools:node="remove" android:required="${CHECK_LICENSE}" android:name="android.vending.CHECK_LICENSE" />
+    <!-- <uses-permission tools:node="remove" android:required="${CHECK_LICENSE}" android:name="android.vending.CHECK_LICENSE" /> -->
+
+    <queries>
+      <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="https" 
+          android:host="my.applink.com"
+          android:pathPrefix="/detail" />
+      </intent>
+
+      <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="blogapp" />
+      </intent>
+    </queries>
 
     <application
       android:name=".MainApplication"
@@ -48,21 +66,19 @@
 
         <intent-filter>
             <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.LAUNCHER" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="blogapp" />
         </intent-filter>
 
+        <!-- 注意：“/”在pathPrefix中是必须的 -->
         <intent-filter android:autoVerify="true">
           <action android:name="android.intent.action.VIEW" />
           <category android:name="android.intent.category.DEFAULT" />
           <category android:name="android.intent.category.BROWSABLE" />
           <data android:scheme="https" 
-            android:host="192.168.1.117"
+            android:host="my.applink.com"
             android:pathPrefix="/detail" />
-            <!-- 注意：“/”在pathPrefix中是必须的 -->
-          <data  />
         </intent-filter>
       </activity>
       <!-- <activity 
