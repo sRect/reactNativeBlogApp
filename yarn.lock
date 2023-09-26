@@ -6733,10 +6733,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.npmmirror.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-amap3d@^3.2.3:
-  version "3.2.3"
-  resolved "https://registry.npmmirror.com/react-native-amap3d/-/react-native-amap3d-3.2.3.tgz#26b548453e2346ec569ced6622aefc0fa3af9797"
-  integrity sha512-BmbrnCf0SLZBkjDS1I1l/WshuVqSU87JXHYskQIql0oL3ZL4zdyQRTp3trZwBp24fU/J+6QppFJOLQhCFI+gNA==
+react-native-amap3d@^3.2.4:
+  version "3.2.4"
+  resolved "https://registry.npmmirror.com/react-native-amap3d/-/react-native-amap3d-3.2.4.tgz#f467099fe14783ceff5ced98fee68d6d772b5f97"
+  integrity sha512-Cp7Tqd87arrxoBQdUGwmtjv7BuSt1XAqc/G+a/woI/pJqlUQScMqW/iHNJKC4jWr3wrJeaOYcjkOouoWCdDoOw==
   dependencies:
     supercluster "^7.1.4"
 

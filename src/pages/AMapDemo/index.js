@@ -385,7 +385,7 @@ const AMapDemo = () => {
             console.log('map onLoad');
           }}
           onLocation={e => {
-            console.log('onLocation==>', e);
+            console.log('onLocation==>');
           }}>
           {location.latitude && location.longitude && (
             <Marker
