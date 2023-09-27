@@ -117,8 +117,8 @@ android {
         applicationId "com.blogapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
-        versionName "0.0.6"
+        versionCode 7
+        versionName "0.0.7"
         // for react-native-config
         resValue "string", "build_config_package", "com.blogapp"
         // AndroidManifest.xml权限节点控制
