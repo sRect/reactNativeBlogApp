@@ -29,6 +29,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Config from 'react-native-config';
 import * as WeChat from 'react-native-wechat-lib';
+import * as Sentry from '@sentry/react-native';
 import NavBar from '../../components/NavBar';
 import {FlashlightManager, MyNotificationManager} from '../../utils';
 
@@ -330,6 +331,12 @@ const About = () => {
     }
   };
 
+  // sentry测试
+  const handleSentryTest = () => {
+    // Sentry.captureException(new Error('hope'));
+    console.e('Sentry Error Test');
+  };
+
   useEffect(() => {
     (async function () {
       try {
@@ -548,6 +555,14 @@ const About = () => {
                 arrow="horizontal"
                 onPress={() => navigate('/deepLinks')}>
                 Deep Links
+              </List.Item>
+              <List.Item
+                extra={
+                  <Button type="ghost" size="small" onPress={handleSentryTest}>
+                    点击
+                  </Button>
+                }>
+                Sentry测试
               </List.Item>
             </List>
           </ScrollView>

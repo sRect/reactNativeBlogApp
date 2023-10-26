@@ -96,6 +96,7 @@ def reactNativeArchitectures() {
 // def READ_EXTERNAL_STORAGE_ENV = project.env.get("READ_EXTERNAL_STORAGE_ENV").toInteger() == 1 ? "true" : "false"
 // def CHECK_LICENSE_ENV = project.env.get("CHECK_LICENSE_ENV").toInteger() == 1 ? "true" : "false"
 
+apply from: "../../node_modules/@sentry/react-native/sentry.gradle"
 android {
     ndkVersion rootProject.ext.ndkVersion
 
@@ -117,8 +118,8 @@ android {
         applicationId "com.blogapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "0.0.7"
+        versionCode 8
+        versionName "0.0.8"
         // for react-native-config
         resValue "string", "build_config_package", "com.blogapp"
         // AndroidManifest.xml权限节点控制
